@@ -1,0 +1,88 @@
+/* סגנונות עבור דף הכניסה והרשמה */
+
+/* ממרכז את כל התוכן בדף */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f3f2ef; /* רקע אפור-בהיר */
+  font-family: Arial, sans-serif;
+  direction: rtl; /* כי הטקסט בעברית */
+}
+
+/* קופסה של הטפסים */
+.login-box {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  text-align: center;
+}
+
+/* כותרות */
+.login-box h1 {
+  color: #0077b5; /* כחול לינקדאין */
+  margin-bottom: 20px;
+}
+
+.login-box h2 {
+  font-size: 18px;
+  margin: 15px 0 10px;
+  color: #333;
+}
+
+.login-box h3 {
+  font-size: 16px;
+  margin: 20px 0 10px;
+  color: #555;
+}
+
+/* שדות טופס */
+.login-box form input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* כפתורים */
+.login-box form button {
+  width: 100%;
+  padding: 10px;
+  background: #0077b5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s;
+}
+
+.login-box form button:hover {
+  background: #005f8d;
+}
+
+/* כפתור Google (מרכז) */
+.google-button {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+/* קישור לעמוד ההרשמה/התחברות */
+.login-link {
+  display: block;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #0077b5;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
