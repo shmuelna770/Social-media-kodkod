@@ -92,7 +92,7 @@ export default function ProfilePage({ userId }: { userId: string }) {
             </li>
             <li>
               <strong>{profile.stats?.following ?? 0}</strong>
-              <span>עוקב/ת</span>
+              <span>עוקב/ת</span>👁️
             </li>
           </ul>
         </div>
