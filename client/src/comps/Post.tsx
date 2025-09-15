@@ -1,35 +1,38 @@
-import React, { useState } from "react";
-import "../style/post.css";
-export type postProp = {
-  id?:number;
-  username: string;
-  img: string;
-  description: string;
-  comments:string;
-  time: string;
-  like: string;
-};
-export default function Post(prop: postProp) {
-  const [like, setLike] = useState(0);
-  const time1 = new Date().toLocaleString();
+import { useState } from "react";
+import type { PostProp } from "./types";
+import PostHeader from "./PostHeader";
+import PostImage from "./PostImage";
+import PostActions from "./PostActions";
+import PostDescription from "./PostDescription";
+import "../style/post.css"
 
-  const hendleLike =async (e:React.FormEvent) => {
-    e.preventDefault();
-    setLike(like + 1);
-};
-{console.log("image",prop.img)}
+export default function Post({
+  username,
+  profileImg,
+  postImg,
+  description,
+  likes = 0,
+  time,
+  comments = [],
+}: PostProp) {
+  const [likeCount, setLikeCount] = useState(likes);
+
+  const handleLike = () => setLikeCount(likeCount + 1);
 
   return (
-    <div className="post">
-      <div id="headerPost">
-        <p id="username">{prop.username}</p>
-      </div>
-      <img id="image" src={prop.img} alt="fost pictuer" />
-      <button id="like" onClick={hendleLike}>
-        Like👍{like}
-      </button>
-      <p id="disciption">{prop.description}</p>
-      <p id="time">{time1}</p>
+    <div>
+      <PostHeader username={username} profileImg={profileImg} />
+      <PostImage postImg={postImg} />
+      <PostActions
+        likeCount={likeCount}
+        commentsCount={comments.length}
+        onLike={handleLike}
+        onToggleComments={() => console.log("comments clicked")}
+      />
+      <PostDescription username={username} description={description} />
+      <p>{time}</p>
+
+
     </div>
   );
 }
