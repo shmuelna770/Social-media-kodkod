@@ -1,5 +1,8 @@
 import Post from "../comps/Post";
-import type { PostProp } from "../comps/types"; 
+import type { PostProp } from "../comps/types";
+import Header from "../comps/Header";
+import Footer from "../comps/Footer";
+import "../index.css"
 
 const posts: PostProp[] = [
   {
@@ -21,7 +24,7 @@ const posts: PostProp[] = [
     time: "1 hour ago",
     comments: [],
   },
-   {
+  {
     username: "yehuda",
     profileImg: "https://i.pravatar.cc/150?img=4",
     postImg: "https://picsum.photos/500/501",
@@ -31,7 +34,7 @@ const posts: PostProp[] = [
     time: "1 hour ago",
     comments: [],
   },
-   {
+  {
     username: "yehuda",
     profileImg: "https://i.pravatar.cc/150?img=4",
     postImg: "https://picsum.photos/500/501",
@@ -41,15 +44,18 @@ const posts: PostProp[] = [
     time: "1 hour ago",
     comments: [],
   },
- 
 ];
 
 export default function HomeFeed() {
   return (
-    <div className="feed">
-      {posts.map((p, idx) => (
-        <Post key={idx} {...p} />
-      ))}
+    <div className="posts-container">
+        <Header/>
+      <div className="feed">
+        {posts.map((p, idx) => (
+          <Post key={idx} {...p} />
+        ))}
+        <Footer/>
+      </div>
     </div>
   );
 }
