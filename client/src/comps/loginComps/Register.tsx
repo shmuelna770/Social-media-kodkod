@@ -3,27 +3,29 @@ import "../style/Register.css";
 
 export default function Register() {
   const [form, setForm] = useState({
-    firstName: "",
+    firstName:"",
     lastName: "",
-    username: "",
+    userName: "",
     password: ""
   });
 
   const handleChange = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+  console.log("object,",form)
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3004/users/add", {
+      const res = await fetch("http://localhost:3004/user/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form)
       });
 
       const data = await res.json();
+      console.log("data",data)
       if (!res.ok) throw new Error(data.error);
 
       alert("נרשמת בהצלחה!");
