@@ -1,16 +1,18 @@
 
 import express from "express"
 import cors from "cors"
-import { postsRouter,userRouter } from "./routs/router.js"
+import { postsRouter } from "./routs/postRout.js"
+import { userRouter } from "./routs/userRout.js"
 import cookieParser from "cookie-parser";
 
 
 
 const app = express();
+
 app.use(cookieParser());
 app.use(cors({
     origin: 'http://localhost:5173',
-    credentials:true,
+    credentials: true,
     method: ["POST", "GET", "PUT", "DELETE", "OPTIONS", "PATCH"],
     alllowedHeaders: ["content-type", "Authorization"],
 }))

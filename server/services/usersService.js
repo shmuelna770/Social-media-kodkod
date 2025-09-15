@@ -17,8 +17,7 @@ export async function getUser(userName) {
 // יצירת משתמש חדש 
 export async function registerUser(newUser) {
     if (!newUser.userName || !newUser.password) return false;
-
-    const hashedPassword = bcryptpassword(newUser.password);
+    const hashedPassword = await bcryptpassword(newUser.password);
     newUser.password = hashedPassword;
     const created = await createUser(newUser);
     return created ? true : false;
