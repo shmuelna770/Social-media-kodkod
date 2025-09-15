@@ -9,8 +9,6 @@ import {
     from "../controllers/postControllers.js";
 
 
-// import { verifyToken } from "../function/verify.js";
-
 export const postsRouter = express.Router();
 
 
@@ -19,7 +17,3 @@ postsRouter.get("/id/:id", getPostByIdController)
 postsRouter.post("/add", createPost);
 postsRouter.delete("/:id", deletePostController);
 postsRouter.put("/update", updatePostController);
-
-
-
-
