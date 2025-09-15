@@ -9,73 +9,80 @@
 
 .profile-header {
   display: flex;
-  gap: 32px;
-  align-items: center;
-  padding: 40px 0;
+  flex-wrap: wrap; 
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: center; 
+  padding: 20px 0;
   border-bottom: 1px solid #dbdbdb;
 }
 
 .avatar {
+  width: clamp(100px, 20%, 180px); 
+  height: clamp(100px, 20%, 180px);
   border-radius: 50%;
-  width: 180px;
-  height: 180px;
   object-fit: cover;
   border: 2px solid #dbdbdb;
+  flex-shrink: 0;
 }
 
 .profile-meta {
-  flex: 1;
+  flex: 1 1 200px; 
+  min-width: 150px;
+  text-align: center; 
 }
 
 .profile-meta .name {
   margin: 0;
-  font-size: 32px;
+  font-size: clamp(20px, 5vw, 32px); 
   font-weight: 600;
+}
+
+.bio {
+  font-size: clamp(12px, 3vw, 14px);
+  line-height: 1.4;
 }
 
 .stats {
   display: flex;
-  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
   list-style: none;
   padding: 0;
   margin: 20px 0;
-  font-size: 16px;
+  font-size: clamp(12px, 2.5vw, 16px);
 }
 
 .stats li {
   display: flex;
   gap: 6px;
-  font-size: 16px;
+  align-items: center;
 }
 
 .stats strong {
   font-weight: 600;
 }
 
-.bio {
-  font-size: 14px;
-  line-height: 1.4;
-}
-
 .posts-grid {
   margin-top: 32px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(clamp(120px, 20%, 200px), 1fr));
   gap: 2px;
 }
 
 .post {
   position: relative;
+  overflow: hidden;
 }
 
 .post img {
   width: 100%;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
   transition: opacity 0.3s ease;
-  border-radius: 15px;
-
+  cursor: pointer;
 }
 
 .post img:hover {
@@ -90,10 +97,10 @@
   border: none;
   border-radius: 4px;
   color: white;
-  font-size: 20px;
   cursor: pointer;
-  width: 32px;
-  height: 32px;
+  width: clamp(24px, 5vw, 32px);
+  height: clamp(24px, 5vw, 32px);
+  font-size: clamp(16px, 3vw, 20px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,9 +122,9 @@
 .post-menu button {
   background: none;
   border: none;
-  padding: 8px 12px;
+  padding: clamp(6px, 1.5vw, 8px) clamp(8px, 2vw, 12px);
   text-align: left;
-  font-size: 14px;
+  font-size: clamp(12px, 2.5vw, 14px);
   cursor: pointer;
 }
 
@@ -131,23 +138,14 @@
     align-items: center;
     text-align: center;
   }
-
-  .avatar {
-    width: 140px;
-    height: 140px;
-  }
-
-  .stats {
-    justify-content: center;
-  }
-
-  .posts-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 480px) {
-  .posts-grid {
-    grid-template-columns: 1fr;
+  .profile-meta .name {
+    font-size: clamp(18px, 6vw, 24px);
+  }
+  
+  .bio {
+    font-size: clamp(11px, 4vw, 13px);
   }
 }
