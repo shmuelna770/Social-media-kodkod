@@ -1,0 +1,33 @@
+.post-description-container {
+  padding: 0 12px;
+}
+
+.username {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+.description {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;       
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s ease;
+}
+
+.description.expanded {
+  -webkit-line-clamp: unset;   
+}
+
+.read-more-btn {
+  background: none;
+  border: none;
+  color: #3897f0;  
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.9rem;
+}
+.read-more-btn:hover {
+  text-decoration: underline;
+}
