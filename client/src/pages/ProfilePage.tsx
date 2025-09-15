@@ -7,9 +7,9 @@ type UserProfile = {
   avatarUrl?: string;
   bio?: string;
   stats?: {
-    posts: number;
-    followers: number;
-    following: number;
+  posts: number;
+  followers: number;
+  following: number;
   };
   posts?: { id: string; imageUrl: string; caption?: string }[];
 };
@@ -32,17 +32,6 @@ const mockProfiles: Record<string, UserProfile> = {
       { id: "p8", imageUrl: "https://picsum.photos/id/1040/400/400", caption: "חברים" },
     ],
   },
-//   u2: {
-//     id: "u2",
-//     name: "משתמש אחר",
-//     bio: "עוד פרופיל לדוגמה.",
-//     avatarUrl: "https://i.pravatar.cc/301",
-//     stats: { posts: 5, followers: 400, following: 50 },
-//     posts: [
-//       { id: "p1", imageUrl: "https://picsum.photos/id/1041/400/400", caption: "נוף" },
-//       { id: "p2", imageUrl: "https://picsum.photos/id/1042/400/400", caption: "חיים יפים" },
-//     ],
-//   },
 };
 
 export default function ProfilePage({ userId }: { userId: string }) {
