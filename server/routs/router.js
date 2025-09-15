@@ -24,6 +24,3 @@ postsRouter.put("/update", updatePostController);
 
 userRouter.post("/add", createUserController);
 userRouter.post("/login", loginUserController);
-
-
-
