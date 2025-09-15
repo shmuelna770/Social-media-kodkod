@@ -1,0 +1,26 @@
+
+.postHeader {
+  display: flex;         
+  width: 100%;
+  align-items: center;   
+  background-color: white; 
+  border-bottom: 1px solid #ddd;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.postHeader .headerPostImg {
+  width: 40px;      
+  height: 40px;   
+  border-radius: 50%;     
+  object-fit: cover;      
+  margin-right: 10px;      
+  border: 1px solid #ccc; 
+  margin-left: 12px; 
+}
+
+.post-header .username {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}

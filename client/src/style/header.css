@@ -1,0 +1,33 @@
+.main.header {
+  display: flex;
+  align-items: center;     
+  justify-content: space-between; 
+  padding: 0.75rem 1.2rem;    
+  background-color: white;   
+  border-bottom: 1px solid #0c0707; 
+  position: sticky;         
+  top: 0;
+}
+
+.main.header img.logo {
+  height: 40px;             
+}
+
+.main.header img.descrip {
+  height: 50px;          
+}
+
+/* ======= Media Query לפלאפון ======= */
+@media (max-width: 768px) {
+  .main.header {
+    padding: 0.5rem;        
+  }
+
+  .main.header img.logo {
+    height: 35px;
+  }
+
+  .main.header img.descrip {
+    height: 25px;
+  }
+}
