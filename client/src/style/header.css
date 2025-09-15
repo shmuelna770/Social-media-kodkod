@@ -10,11 +10,13 @@
 }
 
 .main.header img.logo {
-  height: 40px;             
+  height: 40px;   
+  width: 40px;
 }
 
 .main.header img.descrip {
-  height: 50px;          
+  height: 40px;
+  width: 270px;          
 }
 
 /* ======= Media Query לפלאפון ======= */
