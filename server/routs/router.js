@@ -22,5 +22,6 @@ postsRouter.post("/add", createPost);
 postsRouter.delete("/:id", deletePostController);
 postsRouter.put("/update", updatePostController);
 
+
 userRouter.post("/add", createUserController);
 userRouter.post("/login", loginUserController);
