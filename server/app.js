@@ -4,6 +4,7 @@ import cors from "cors"
 import { postsRouter } from "./routs/postRout.js"
 import { userRouter } from "./routs/userRout.js"
 import cookieParser from "cookie-parser";
+import { likesRout } from "./routs/likesRout.js";
 
 
 
@@ -22,6 +23,7 @@ app.use(express.static("public"))
 
 app.use("/posts", postsRouter)
 app.use("/user", userRouter)
+app.use("/like", likesRout)
 
 const Port = 3004
 app.listen(Port, () => {
