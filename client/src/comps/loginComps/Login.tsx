@@ -30,12 +30,14 @@ export default function Login() {
         console.error("Server error:", data.error);
         throw new Error(data.error);
       }
-      
-      if(res.ok) { navigate('/feed');}
 
-      setUser(data.user);
-      setMessage("התחברת בהצלחה!");
-    } catch (err: any) {
+      if (res.ok) {
+        navigate('/feed')
+        localStorage.setItem("id", data.id);
+      }
+      setUser(data.id);
+    }
+    catch (err: any) {
       console.error("Error during login:", err);
       setMessage("שגיאה: " + err.message);
     }
