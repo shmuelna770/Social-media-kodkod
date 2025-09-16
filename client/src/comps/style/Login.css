@@ -4,14 +4,18 @@
   flex-direction: column;
   gap: 12px;
   margin-top: 10px;
+  width: 100%;
+  max-width: 400px; /* מקסימום רוחב לשולחן עבודה */
+  padding: 0 20px; /* ריווח פנימי למובייל */
+  box-sizing: border-box;
 }
 
 /* שדות קלט */
 .login-form input {
-  padding: 10px;
+  padding: 12px; /* קצת יותר נוח למובייל */
   border: 1px solid #ddd;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 16px; /* גודל קריא יותר במסכים קטנים */
   transition: border 0.2s;
 }
 
@@ -27,12 +31,26 @@
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 10px;
-  font-size: 15px;
+  padding: 12px;
+  font-size: 16px;
   cursor: pointer;
   transition: background 0.3s;
 }
 
 .login-form button:hover {
   background: #005f8d;
+}
+
+/* התאמות מובייל */
+@media (max-width: 480px) {
+  .login-form {
+    gap: 10px;
+    padding: 0 15px;
+  }
+
+  .login-form input,
+  .login-form button {
+    font-size: 14px;
+    padding: 10px;
+  }
 }

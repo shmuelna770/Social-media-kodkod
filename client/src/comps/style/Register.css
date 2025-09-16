@@ -4,20 +4,32 @@
   flex-direction: column;
   gap: 12px;
   margin-top: 10px;
+  width: 100%;
+  max-width: 400px;
+  /* הגבלת רוחב */
+  padding: 0 20px;
+  /* ריווח פנימי למובייל */
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* שדות קלט */
 .register-form input {
-  padding: 10px;
+  padding: 12px;
+  /* יותר נוח למגע */
   border: 1px solid #ddd;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 16px;
+  /* קריא יותר במובייל */
   transition: border 0.2s;
+  box-sizing: border-box;
 }
 
 .register-form input:focus {
   outline: none;
-  border-color: #0077b5; /* כחול לינקדאין */
+  border-color: #0077b5;
+  /* כחול לינקדאין */
   box-shadow: 0 0 4px rgba(0, 119, 181, 0.3);
 }
 
@@ -27,12 +39,70 @@
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 10px;
-  font-size: 15px;
+  padding: 12px;
+  font-size: 16px;
   cursor: pointer;
   transition: background 0.3s;
 }
 
 .register-form button:hover {
   background: #005f8d;
+}
+
+/* קישור לעמוד הכניסה */
+.register-link {
+  display: block;
+  margin-top: 15px;
+  text-align: center;
+  color: #0077b5;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}
+
+/* סגנון כללי */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f3f2ef;
+  color: #333;
+  padding: 0;
+  margin: 0;
+}
+
+h2 {
+  text-align: center;
+  color: #0077b5;
+  font-size: 22px;
+}
+
+/* הודעות שגיאה / מידע */
+.message {
+  color: rgb(153, 74, 74);
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  direction: rtl;
+  font-weight: bold;
+  word-wrap: break-word;
+}
+
+/* התאמות מובייל */
+@media (max-width: 480px) {
+  .register-form {
+    gap: 10px;
+    padding: 0 15px;
+  }
+
+  .register-form input,
+  .register-form button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
 }

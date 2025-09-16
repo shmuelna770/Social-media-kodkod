@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { PostProp } from "./types";
 import PostHeader from "./PostHeader";
 import PostImage from "./PostImage";
@@ -6,33 +6,28 @@ import PostActions from "./PostActions";
 import PostDescription from "./PostDescription";
 import "../style/post.css"
 
-export default function Post({
-  username,
-  profileImg,
-  postImg,
-  description,
-  likes = 0,
-  time,
-  comments = [],
-}: PostProp) {
-  const [likeCount, setLikeCount] = useState(likes);
+export default function Post(post: PostProp) {
+  const [likeCount, setLikeCount] = useState<number>(0);
+  const [userName, setUserName] = useState<string>('Unknown')
 
-  const handleLike = () => setLikeCount(likeCount + 1);
+  const handleLike = () => setLikeCount(prev => prev + 1);
+
+  useEffect(() => {
+    setLikeCount(post.sumOfLikes)
+  }, []);
 
   return (
     <div>
-      <PostHeader username={username} profileImg={profileImg} />
-      <PostImage postImg={postImg} />
+      <PostHeader username={userName} profileImg={post.imageUrl} />
+      <PostImage postImg={post.imageUrl} />
       <PostActions
+        commentsCount={0}
         likeCount={likeCount}
-        commentsCount={comments.length}
         onLike={handleLike}
         onToggleComments={() => console.log("comments clicked")}
       />
-      <PostDescription username={username} description={description} />
-      <p>{time}</p>
-
-
+      <PostDescription username={userName} description={post.description} />
+      <p>{post.created_at}</p>
     </div>
   );
 }

@@ -1,0 +1,138 @@
+.search-page {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    /* רקע כללי בהיר */
+    min-height: 100vh;
+    direction: rtl;
+    box-sizing: border-box;
+    padding-bottom: 80px;
+    /* רווח לתחתית למנוע חיתוך עם הפוטר */
+    color: #333;
+    /* כתב אפור כהה */
+}
+
+/* קופסה מרכזית */
+.search-box {
+    background-color: #ffffff;
+    /* לבן */
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* שדה חיפוש */
+.search-input {
+    position: sticky;
+    top: 9%;
+    z-index: 1000;
+    width: 100%;
+    padding: 12px 1px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    border: 2px solid #cccccc;
+    /* גבול אפור בהיר */
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #888;
+    /* אפור בינוני */
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+/* רשימת משתמשים */
+.user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* פריט משתמש */
+.user-list li {
+    background-color: #ffffff; 
+    margin-bottom: 6px;   /* היה 12px → חצי רווח */
+    padding: 10px 12px;   /* היה 14px 9px → פחות ריווח פנימי */
+    border-radius: 8px;   /* פחות עגלול */
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* צל עדין יותר */
+    display: flex;
+    align-items: center;
+}
+
+
+.user-list li:hover {
+    transform: translateY(-2px);
+    background-color: #f9f9f9;
+    /* בהיר יותר בהובר */
+}
+
+/* לינק של המשתמש */
+.user-link {
+    text-decoration: none;
+    color: #333;
+    /* טקסט אפור כהה */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.user-link:hover {
+    color: #556e65;
+}
+
+.no-results {
+    text-align: center;
+    color: #777;
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+/* תמונת פרופיל */
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    flex-shrink: 0;
+}
+
+/* בתוך מובייל – פחות ריווח */
+@media (max-width: 480px) {
+    .search-box {
+        padding: 14px;
+        border-radius: 12px;
+    }
+
+    .search-page {
+        padding: 12px;
+    }
+
+    .search-input {
+        font-size: 14px;
+        padding: 10px 12px;
+        border-radius: 8px;
+    }
+
+    .user-list li {
+        padding: 12px 14px;
+        border-radius: 10px;
+    }
+
+    .user-link {
+        font-size: 14px;
+    }
+
+    .profile-img {
+        width: 40px;
+        height: 40px;
+    }
+}

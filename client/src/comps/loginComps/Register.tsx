@@ -1,44 +1,57 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import "../style/Register.css";
 
 export default function Register() {
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    username: "",
-    password: ""
-  });
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleChange = (e: any) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const newUser = { firstName, lastName, userName, password };
+    console.log("Sending user data to server:", newUser);
 
     try {
-      const res = await fetch("http://localhost:3004/users/add", {
+      const res = await fetch("http://localhost:3004/user/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form)
+        body: JSON.stringify(newUser),
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
+      console.log("Server response:", data);
 
-      alert("נרשמת בהצלחה!");
-    } catch (err: any) {
-      alert("שגיאה:  " + err.message);
+      if (!res.ok) {
+        console.error("Server error:", data.error);
+        throw new Error(data.error);
+      }
+
+      if (res.ok) {
+        navigate('/Login')
+      }
+
+      setMessage(data.msg);
+    } catch (error) {
+      console.error("Error during submission:", error);
+      setMessage("An error occurred. Please try again.");
     }
   };
 
   return (
     <form className="register-form" onSubmit={handleSubmit}>
-      <input name="firstName" placeholder="שם פרטי" onChange={handleChange} required />
-      <input name="lastName" placeholder="שם משפחה" onChange={handleChange} required />
-      <input name="username" placeholder="שם משתמש" onChange={handleChange} required />
-      <input type="password" name="password" placeholder="סיסמה" onChange={handleChange} required />
+      <input value={firstName} placeholder="שם פרטי" onChange={(e) => setFirstName(e.target.value)} required />
+      <input value={lastName} placeholder="שם משפחה" onChange={(e) => setLastName(e.target.value)} required />
+      <input value={userName} placeholder="שם משתמש" onChange={(e) => setUserName(e.target.value)} required />
+      <input type="password" value={password} placeholder="סיסמה" onChange={(e) => setPassword(e.target.value)} required />
       <button type="submit">הירשם</button>
+
+      <div className="message">{message}</div>
     </form>
   );
 }

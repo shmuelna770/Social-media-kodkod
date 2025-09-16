@@ -1,10 +1,16 @@
 // postService.js
-import { getData, getDataById, writeData, deleteData, updateData } from "../dal/postDal.js";
+import { getData, getDataById, writeData, deleteData, updateData ,getPostsOfFollowing, getDataUserId} from "../dal/postDal.js";
 
 // משיכת כל הפוסטים
 export async function getPosts() {
     const posts = await getData();
     return posts;
+}
+
+export async function getPostsByUserId(userId) {
+    if (!userId) return false;
+    const post = await getDataUserId(userId);
+    return post || false;
 }
 
 //משיכת פוסט לפי ID
@@ -49,3 +55,6 @@ export async function updateSinglePost(newData) {
     return updated ? true : false;
 }
 
+export async function getUserFeed(userId) {
+    return await getPostsOfFollowing(userId);
+}

@@ -5,21 +5,21 @@ import {
     createPost,
     deletePostController,
     updatePostController,
+    getFeed,
+    getPostsByUserIdController
 }
     from "../controllers/postControllers.js";
 
+    import fileUpload from "express-fileupload";
 
-// import { verifyToken } from "../function/verify.js";
 
 export const postsRouter = express.Router();
 
 
+postsRouter.get("/feed/:id",getFeed);
 postsRouter.get("/", getAllPosts);
+postsRouter.post("/:userId",getPostsByUserIdController)
 postsRouter.get("/id/:id", getPostByIdController)
-postsRouter.post("/add", createPost);
+postsRouter.post("/add/:id",fileUpload() ,createPost);
 postsRouter.delete("/:id", deletePostController);
 postsRouter.put("/update", updatePostController);
-
-
-
-
