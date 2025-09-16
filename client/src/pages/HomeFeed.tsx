@@ -6,27 +6,33 @@ import "../index.css"
 import { useEffect, useState } from "react";
 import makeRequest from "../utils/makeRequest";
 
-const [posts, setPosts] = useState<PostProp[]>([]);
-const [message, setMessage] = useState<string>("");
-const [loading, setLoading] = useState<boolean>(false)
-
-useEffect(() => {
-  const fetchPosts = async () => {
-    setLoading(true)
-    const allPosts = await makeRequest('/posts', 'GET')
-    setLoading(false)
-    if (!allPosts || !allPosts[0].id) {
-      setMessage(allPosts)
-      return
-    }
-    setPosts(allPosts)
-    console.log(allPosts);
-
-  }
-  fetchPosts()
-}, [])
 
 export default function HomeFeed() {
+
+  const [posts, setPosts] = useState<PostProp[]>([]);
+  const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false)
+
+  useEffect(() => {
+    const fetchFeed = async () => {
+      const userId = localStorage.getItem('id');
+      if (!userId) {
+        setMessage(`User not found`)
+        return
+      }
+      setLoading(true)
+      const allPosts = await makeRequest(`/posts/feed/${userId}`, 'GET')
+      setLoading(false)
+      if (!allPosts) {
+        setMessage(allPosts)
+        return
+      }
+      setPosts(allPosts)
+
+    }
+    fetchFeed()
+  }, [])
+
   return (
     <div className="posts-container">
       <Header />
