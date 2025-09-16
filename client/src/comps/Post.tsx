@@ -6,31 +6,23 @@ import PostActions from "./PostActions";
 import PostDescription from "./PostDescription";
 import "../style/post.css"
 
-export default function Post({
-  username,
-  profileImg,
-  postImg,
-  description,
-  likes = 0,
-  time,
-  comments = [],
-}: PostProp) {
-  const [likeCount, setLikeCount] = useState(likes);
+export default function Post(post: PostProp) {
+  const [likeCount, setLikeCount] = useState(post.sumOfLikes);
+  const [userName, setUserName] = useState<string>('Unknown')
 
   const handleLike = () => setLikeCount(likeCount + 1);
 
   return (
     <div>
-      <PostHeader username={username} profileImg={profileImg} />
-      <PostImage postImg={postImg} />
+      <PostHeader username={userName} profileImg={post.imageUrl} />
+      <PostImage postImg={post.imageUrl} />
       <PostActions
         likeCount={likeCount}
-        commentsCount={comments.length}
         onLike={handleLike}
         onToggleComments={() => console.log("comments clicked")}
       />
-      <PostDescription username={username} description={description} />
-      <p>{time}</p>
+      <PostDescription username={userName} description={post.description} />
+      <p>{post.created_at}</p>
 
 
     </div>
