@@ -1,17 +1,29 @@
-export default async function makeRequest(url: string, method: string = 'GET', body: unknown = null) {
+export default async function makeRequest(url: string, method: string = 'GET', body: any = null, isFile: boolean = false) {
     const SERVER_URL = "http://localhost:3004"
     try {
-        const options: RequestInit = {
-            method,
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include'
-        };
+        let res
+        if (isFile) {
 
-        if (body) options.body = JSON.stringify(body);
+            await new Promise(resolve => setTimeout(resolve, 500))
+            
+            res = await fetch(`${SERVER_URL}${url}`, {
+                method,
+                body,
+                credentials: 'include'
+            })
+        } else {
+            const options: RequestInit = {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+            };
 
-        await new Promise(resolve => setTimeout(resolve, 500))
+            if (body) options.body = JSON.stringify(body);
 
-        const res = await fetch(`${SERVER_URL}${url}`, options);
+            await new Promise(resolve => setTimeout(resolve, 500))
+
+            res = await fetch(`${SERVER_URL}${url}`, options);
+        }
 
         if (res.status === 401) {
             return ('Token expired of invalid. Please login again.');

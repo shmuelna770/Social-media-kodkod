@@ -1,4 +1,5 @@
 import { getPosts, writeNewPost, deletePost, updateSinglePost, getPostById, getUserFeed, getPostsByUserId } from "../services/postsService.js";
+import path from 'path'
 
 export async function getAllPosts(req, res) {
     try {
@@ -11,10 +12,10 @@ export async function getAllPosts(req, res) {
 
 
 export async function getPostsByUserIdController(req, res) {
-    const userId = req.body;
     try {
+        const userId = parseInt(req.params.id);
         const post = await getPostsByUserId(userId);
-        if (!post) return res.status(404).json({ msg: "Posts snot found" });
+        if (!post) return res.status(404).json({ msg: "Posts not found" });
         res.status(200).json(post);
     } catch (error) {
         res.status(500).json({ error: "Failed to read posts" });
@@ -22,8 +23,8 @@ export async function getPostsByUserIdController(req, res) {
 }
 
 export async function getPostByIdController(req, res) {
-    const id = parseInt(req.params.id);
     try {
+        const id = parseInt(req.params.id);
         const post = await getPostById(id);
         if (!post) return res.status(404).json({ msg: "post not found" });
         res.status(200).json(post);
@@ -33,14 +34,20 @@ export async function getPostByIdController(req, res) {
 }
 
 export async function createPost(req, res) {
-    const newPost = req.body;
-    console.log('post', newPost);
+    const userId = req.params.id
+    const body = req.body;
+    body.userId = userId
+    console.log('post', body);
 
-    if (!newPost.image_url || !newPost.description) {
-        return res.status(400).json({ msg: "Image and description required" });
+    if (!body.description || !body.userId) {
+        return res.status(400).json({ msg: "Description and userId required" });
     }
     try {
-        const success = await writeNewPost(newPost);
+        const { file } = req.files;
+        file.name = `${Date.now()}_${file.name}`
+        file.mv(path.join("./public/images", file.name));
+        body.imageUrl = `http://localhost:3004/${file.name}`
+        const success = await writeNewPost(body);
         if (!success) return res.status(400).json({ msg: "Failed to create post" });
         res.status(201).json({ success: true, msg: "Post created" });
     } catch (error) {

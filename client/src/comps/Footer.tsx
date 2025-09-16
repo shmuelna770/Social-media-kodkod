@@ -1,14 +1,15 @@
 import "../style/footer.css"
+import { Link } from "react-router";
 import { FaUser, FaPlusSquare, FaHome, FaSearch, FaCog } from "react-icons/fa";
 
 export default function Footer() {
   return (
     <div className="footer">
-      <button><FaUser size={24} /></button>
-      <button><FaPlusSquare size={24} /></button>
-      <button><FaHome size={24} /></button>
-      <button><FaSearch size={24} /></button>
-      <button><FaCog size={24} /></button>
+      <Link to='profile-page'><FaUser size={24} /></Link>
+      <Link to='add-new-post'><FaPlusSquare size={24} /></Link>
+      <Link to=''><FaHome size={24} /></Link>
+      <Link to='search'><FaSearch size={24} /></Link>
+      <Link to='settings'><FaCog size={24} /></Link>
     </div>
   );
 }

@@ -4,6 +4,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 50%;
+  color: #1c1c1c;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -11,6 +12,10 @@
   background-color: white;
   border-top: 1px solid #dbdbdb;
   z-index: 1000;
+}
+a {
+  text-decoration: none;
+  color: inherit; 
 }
 
 .footer button {

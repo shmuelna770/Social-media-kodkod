@@ -13,13 +13,13 @@ import {commentsRouter} from "./routs/commentsRout.js"
 const app = express();
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin:'http://localhost:5173' ,
     credentials: true,
     method: ["POST", "GET", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["content-type", "Authorization"],
 }))
 app.use(express.json());
-app.use(express.static("public"))
+app.use(express.static("public/images"))
 
 app.use("/posts", postsRouter)
 app.use("/user", userRouter)

@@ -33,8 +33,7 @@ export default function Register() {
       }
 
       if (res.ok) {
-        navigate('/feed')
-        localStorage.setItem("id", data.id);
+        navigate('/Login')
       }
 
       setMessage(data.msg);
