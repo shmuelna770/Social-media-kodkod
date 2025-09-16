@@ -22,6 +22,9 @@ export default function HomeFeed() {
       }
       setLoading(true)
       const allPosts = await makeRequest(`/posts/feed/${userId}`, 'GET')
+      if (!allPosts || allPosts.length === 0) {
+        setMessage("Start follow to show posts")
+      }
       setLoading(false)
       if (!allPosts) {
         setMessage(allPosts)
@@ -37,7 +40,7 @@ export default function HomeFeed() {
     <div className="posts-container">
       <Header />
       <div className="feed">
-        {!message && posts.map((post, idx) => (<Post key={idx} {...post} />))}
+        {!message && posts.map((post) => (<Post key={post.id} {...post} />))}
         {loading && <p className='loading'>Loading...</p>}
         {message && !loading && <p className='failed'>{message}</p>}
         <Footer />
