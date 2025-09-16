@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import "../style/Register.css";
 
 export default function Register() {
@@ -8,6 +9,8 @@ export default function Register() {
   const [password, setPassword] = useState("");
 
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -29,7 +32,12 @@ export default function Register() {
         throw new Error(data.error);
       }
 
-      setMessage(data.msg); // Updated to use the 'msg' property
+      if (res.ok) {
+        navigate('/feed')
+        localStorage.setItem("id", data.id);
+      }
+
+      setMessage(data.msg);
     } catch (error) {
       console.error("Error during submission:", error);
       setMessage("An error occurred. Please try again.");
