@@ -32,7 +32,10 @@ export default function Register() {
         throw new Error(data.error);
       }
 
-      if(res.ok) {navigate("/Login");}
+      if (res.ok) {
+        navigate('/feed')
+        localStorage.setItem("id", data.id);
+      }
 
       setMessage(data.msg);
     } catch (error) {
