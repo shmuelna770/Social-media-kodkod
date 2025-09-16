@@ -17,8 +17,8 @@ function App() {
         <Route path="" element={<Feed />} />
         <Route path="add-new-post" element={<AddNewPost />} />
         <Route path="profile-page" element={<ProfilePage userId="u1" />} />
-        <Route path="Settings" element={<div>Settings Page</div>} />
-        <Route path="Search" element={<SearchPage />} />
+        <Route path="settings" element={<div>Settings Page</div>} />
+        <Route path="search" element={<SearchPage />} />
       </Route>
       <Route path="/Login" element={<LoginPage />} />
     </Routes>

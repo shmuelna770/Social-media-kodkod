@@ -19,7 +19,7 @@ app.use(cors({
     alllowedHeaders: ["content-type", "Authorization"],
 }))
 app.use(express.json());
-app.use(express.static("public"))
+app.use(express.static("public/images"))
 
 app.use("/posts", postsRouter)
 app.use("/user", userRouter)

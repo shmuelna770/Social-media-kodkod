@@ -37,7 +37,6 @@ const mockProfiles: Record<string, UserProfile> = {
 export default function ProfilePage({ userId }: { userId: string }) {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
-
   useEffect(() => {
     setProfile(mockProfiles[userId] || mockProfiles["u1"]);
   }, [userId]);
