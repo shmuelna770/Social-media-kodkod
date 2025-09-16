@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router"; 
 import makeRequest from "../utils/makeRequest";
-import "../styles/profile.css";
+import "../style/profile.css";
 import Header from "../comps/Header";
 import Footer from "../comps/Footer";
 

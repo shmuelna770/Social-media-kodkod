@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import makeRequest from "../utils/makeRequest";
-import "../styles/profile.css";
-import Header from "../comps/Header";
+import "../style/profile.css";
 import Footer from "../comps/Footer";
 
 type UserProfile = {
@@ -24,30 +23,30 @@ export default function ProfilePage() {
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    if (!id) return;
+  if (!id) return;
 
-    const fetchProfile = async () => {
-      try {
-        const res = await makeRequest(`/user/${id}`);
-        setProfile(res);
+  const fetchProfile = async () => {
+    try {
+      const res = await makeRequest(`/user/${id}`);
+      setProfile(res);
 
-        const postsRes = await makeRequest(`/posts/userId`,"POST", { userId: res.id })
-        setPosts(postsRes);
-      } catch (err) {
-        console.error("Problem retrieving profile or posts:", err);
-        setError("Problem retrieving profile or posts");
-      }
-    };
+      const postsRes = await makeRequest(`/posts?userId=${res.id}`, "GET"); // שיניתי
+      setPosts(Array.isArray(postsRes) ? postsRes : []); // הוספתי בדיקה
+    } catch (err) {
+      console.error("Problem retrieving profile or posts:", err);
+      setError("Problem retrieving profile or posts");
+    }
+  };
 
-    fetchProfile();
-  }, [id]);
+  fetchProfile();
+}, [id]);
+
 
   if (error) return <p>{error}</p>;
   if (!profile) return <p>Loading profile...</p>;
 
   return (
     <>
-      <Header />
       <main className="profile-root" aria-labelledby="profile-heading">
         <header className="profile-header">
           <img
