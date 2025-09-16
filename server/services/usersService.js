@@ -44,7 +44,7 @@ export async function loginUser(userName, password) {
         { expiresIn: "1d" }
     );
 
-    return { success: true, user,token };
+    return { success: true, user, token };
 }
 
 

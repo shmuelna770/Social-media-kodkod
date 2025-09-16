@@ -28,8 +28,6 @@ export default function Post(post: PostProp) {
       />
       <PostDescription username={userName} description={post.description} />
       <p>{post.created_at}</p>
-
-
     </div>
   );
 }
