@@ -1,4 +1,6 @@
 import express from "express"
+import {verifyToken} from "../auth/verify.js"
+
 import {
     getAllPosts,
     getPostByIdController,
@@ -9,7 +11,6 @@ import {
     getPostsByUserIdController
 }
     from "../controllers/postControllers.js";
-
 
 export const postsRouter = express.Router();
 

@@ -46,7 +46,7 @@ export async function getDataById(id) {
 export async function writeData(newPost) {
     const { data, error } = await supabase
         .from("posts")
-        .insert([newPost])
+        .insert([newPost,])
         .select();
     if (error) {
         console.error("Error inserting post:", error);
