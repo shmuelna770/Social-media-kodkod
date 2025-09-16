@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router';
 import { useEffect } from 'react';
-import '../style/HomePage.css';
+import '../../style/HomePage.css';
 import logo from '../../assets/x.png';
 import log from '../../../public/logo.png';
 
