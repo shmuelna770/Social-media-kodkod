@@ -15,6 +15,19 @@ export async function getData() {
     return data;
 }
 
+// משיכת פוסטים לפי userId
+export async function getDataUserId(userId) {
+    const { data, error } = await supabase
+        .from("posts")
+        .select("*")
+        .eq("userId", userId.userId)
+    if (error) {
+        console.error("Error fetching post by userName:", error);
+        return null;
+    }
+    return data;
+}
+
 // משיכת פוסט לפי ID
 export async function getDataById(id) {
     const { data, error } = await supabase
