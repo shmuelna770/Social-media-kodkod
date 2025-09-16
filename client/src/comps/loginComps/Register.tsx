@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import "../style/Register.css";
+import "../../style/Register.css";
 
 export default function Register() {
   const [firstName, setFirstName] = useState("");
