@@ -2,8 +2,6 @@ import bcrypt from "bcrypt";
 
 export async function bcryptpassword(password) {
     const pass = await bcrypt.hash(password, 10);
-
-    
     return pass;
 }
 

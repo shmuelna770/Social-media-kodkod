@@ -5,6 +5,7 @@ import { postsRouter } from "./routs/postRout.js"
 import { userRouter } from "./routs/userRout.js"
 import {followsRouter} from "./routs/followsRout.js"
 import cookieParser from "cookie-parser";
+import { likesRout } from "./routs/likesRout.js";
 
 
 
@@ -22,6 +23,7 @@ app.use(express.static("public"))
 
 app.use("/posts", postsRouter)
 app.use("/user", userRouter)
+app.use("/like", likesRout)
 app.use("/follows",followsRouter)
 
 const Port = 3004

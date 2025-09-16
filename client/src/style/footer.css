@@ -1,0 +1,37 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem 0;
+  background-color: white;
+  border-top: 1px solid #dbdbdb;
+  z-index: 1000;
+}
+
+.footer button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+}
+
+.footer button:hover {
+  color: #007bff; 
+}
+
+/* ======= Media Query לפלאפון ======= */
+@media (max-width: 768px) {
+  .footer {
+    width: 100%;
+    left: 0;
+    transform: none;
+  }
+}

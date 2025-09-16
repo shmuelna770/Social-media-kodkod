@@ -1,6 +1,6 @@
 import { UserProvider } from "../comps/loginComps/UserContext";
 import Login from "../comps/loginComps/Login";
-import GoogleSignIn from "../comps/loginComps/GoogleSignIn";
+// import GoogleSignIn from "../comps/loginComps/GoogleSignIn";
 import "../comps/style/LoginPage.css";
 import '../comps/style/LoginPage.css'
 import logo from '../assets/x.png';
@@ -14,9 +14,9 @@ function LoginPage() {
                     <h2>כניסה</h2>
                     <Login />
                     <h3>או כניסה עם Google</h3>
-                    <div className="google-button">
-                        <GoogleSignIn />
-                    </div>
+                    {/* <div className="google-button"> */}
+                        {/* <GoogleSignIn /> */}
+                    {/* </div> */}
                 </div>
             </div>
         </UserProvider>
