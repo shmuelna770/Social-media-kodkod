@@ -6,6 +6,7 @@ import HomeFeed from "./pages/HomeFeed";
 import HomePage from "./comps/loginComps/HomePage";
 import AddNewPost from "./comps/AddNewPost";
 import Feed from "./pages/Feed";
+import SearchPage from "./comps/Search";
 
 function App() {
   return (
@@ -15,7 +16,9 @@ function App() {
       <Route path="/feed" element={<HomeFeed />} >
         <Route path="" element={<Feed />} />
         <Route path="add-new-post" element={<AddNewPost />} />
-        <Route path="profile-page" element={<ProfilePage  userId="u1"/>}/>
+        <Route path="profile-page" element={<ProfilePage userId="u1" />} />
+        <Route path="Settings" element={<div>Settings Page</div>} />
+        <Route path="Search" element={<SearchPage />} />
       </Route>
       <Route path="/Login" element={<LoginPage />} />
     </Routes>

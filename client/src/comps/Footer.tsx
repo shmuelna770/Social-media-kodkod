@@ -1,5 +1,5 @@
-import { Link } from "react-router";
 import "../style/footer.css"
+import { Link } from "react-router";
 import { FaUser, FaPlusSquare, FaHome, FaSearch, FaCog } from "react-icons/fa";
 
 export default function Footer() {
