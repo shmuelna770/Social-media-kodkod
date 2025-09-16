@@ -1,0 +1,73 @@
+.add-post-container {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #fff;
+  border: 1px solid #dbdbdb;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+.add-post-container h1 {
+  font-size: 20px;
+  text-align: center;
+  font-weight: 600;
+  color: #262626;
+}
+
+.add-post-container label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  color: #262626;
+}
+
+.add-post-container textarea {
+  resize: none;
+  min-height: 80px;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  padding: 10px;
+  outline: none;
+  font-size: 14px;
+}
+
+.add-post-container input[type="file"] {
+  border: 1px solid #dbdbdb;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fafafa;
+  font-size: 14px;
+}
+
+.add-post-container button {
+  background: #0095f6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: center; 
+  transition: opacity 0.2s ease;
+}
+
+.add-post-container button:hover {
+  opacity: 0.9;
+}
+
+.add-post-container .loading {
+  text-align: center;
+  color: #0095f6;
+  font-weight: 500;
+}
+
+.add-post-container .failed {
+  text-align: center;
+  color: #ed4956;
+  font-weight: 500;
+}
