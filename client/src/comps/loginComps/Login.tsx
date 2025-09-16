@@ -32,10 +32,10 @@ export default function Login() {
       }
 
       if (data.user.success == true) {
+        localStorage.setItem("id", data.user.user.id);
         navigate('/feed')
-        localStorage.setItem("id", data.id);
       }
-      else{
+      else {
         setMessage("שם משתמש או סיסמה שגויים, נסה שוב.");
       }
       setUser(data.id);
