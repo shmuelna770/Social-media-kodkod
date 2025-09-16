@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import makeRequest from "../utils/makeRequest";
+import "../style/addPost.css"
 
 const AddNewPost = () => {
     const [userId, setUserId] = useState<string>("");
@@ -40,7 +41,7 @@ const AddNewPost = () => {
     }
 
     return (
-        <>
+  <div className="add-post-container">
             <h1>Add New Post</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="description">
@@ -68,7 +69,7 @@ const AddNewPost = () => {
                 {loading && <p className="loading">Loading...</p>}
                 {message && !loading && <p className="failed">{message}</p>}
             </form>
-        </>
+        </div>
     );
 };
 
