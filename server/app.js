@@ -13,7 +13,7 @@ const app = express();
 
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin:'http://localhost:5173' ,
     credentials: true,
     method: ["POST", "GET", "PUT", "DELETE", "OPTIONS", "PATCH"],
     alllowedHeaders: ["content-type", "Authorization"],
