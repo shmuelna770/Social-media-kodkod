@@ -1,5 +1,5 @@
 // services/usersService.js
-import { getUsersData, getUserById, createUser } from "../dal/usersDALl.js";
+import { getUsersData, getUserById, createUser ,getUserByUserName} from "../dal/usersDALl.js";
 import { bcryptpassword, checkPass } from "../auth/bcrypt.js"
 const JWT_SECRET = process.env.JWT_SECRET || "secret_key";
 import jwt from "jsonwebtoken";
@@ -32,11 +32,11 @@ export async function registerUser(newUser) {
 export async function loginUser(userName, password) {
     const user = await getUserByUserName(userName);
     if (!user) {
-        return { success: false, reason: "user_not_found" };
+        return { success: false, reason: "user not found" };
     }
     const validPassword = await checkPass(password, user.password);
     if (!validPassword) {
-        return { success: false, reason: "wrong_password" };
+        return { success: false, reason: "wrong password" };
     }
     const token = jwt.sign(
         { id: user.id, userName: user.userName },
