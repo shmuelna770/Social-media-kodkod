@@ -1,5 +1,5 @@
 // services/usersService.js
-import { getUsersData, getUserByUserName, createUser } from "../dal/usersDALl.js";
+import { getUsersData, getUserById, createUser } from "../dal/usersDALl.js";
 import { bcryptpassword, checkPass } from "../auth/bcrypt.js"
 const JWT_SECRET = process.env.JWT_SECRET || "secret_key";
 import jwt from "jsonwebtoken";
@@ -11,9 +11,9 @@ export async function getAllUsers() {
     return await getUsersData();
 }
 
-// משיכת משתמש לפי userName
-export async function getUser(userName) {
-    const user = await getUserByUserName(userName);
+// משיכת משתמש לפי id
+export async function getUser(id) {
+    const user = await getUserById(id);
     return user || false;
 }
 

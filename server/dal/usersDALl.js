@@ -12,11 +12,11 @@ export async function getUsersData() {
 }
 
 // משיכת משתמש לפי userName
-export async function getUserByUserName(userName) {
+export async function getUserById(id) {
     const { data, error } = await supabase
         .from("users")
         .select("*")
-        .eq("userName", userName)
+        .eq("id", id)
         .single();
     if (error) {
         console.error("Error fetching user:", error);
