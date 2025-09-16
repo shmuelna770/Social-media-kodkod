@@ -43,10 +43,11 @@ export async function loginUserController(req, res) {
     console.log(req.body);
     
     if (!userName || !password)
-
         return res.status(400).json({ msg: "Username and password required" });
     try {
-        const result = await loginUser(userName, password);        
+        const result = await loginUser(userName, password);
+        console.log('z',result);
+                
         if (!result.success) {
             if (result.reason === "user_not_found") {
                 return res.status(404).json({ msg: "User not found" });
