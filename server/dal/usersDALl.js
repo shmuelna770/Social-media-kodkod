@@ -12,6 +12,19 @@ export async function getUsersData() {
 }
 
 // משיכת משתמש לפי userName
+export async function getUserByUserName(userName) {
+    const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("userName", userName)
+        .single();
+    if (error) {
+        console.error("Error fetching user:", error);
+        return null;
+    }
+    return data;
+}
+// משיכת משתמש לפי id
 export async function getUserById(id) {
     const { data, error } = await supabase
         .from("users")
