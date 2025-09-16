@@ -31,9 +31,12 @@ export default function Login() {
         throw new Error(data.error);
       }
 
-      if (res.ok) {
+      if (data.user.success == true) {
         navigate('/feed')
         localStorage.setItem("id", data.id);
+      }
+      else{
+        setMessage("שם משתמש או סיסמה שגויים, נסה שוב.");
       }
       setUser(data.id);
     }
