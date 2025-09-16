@@ -1,5 +1,5 @@
 // postService.js
-import { getData, getDataById, writeData, deleteData, updateData } from "../dal/postDal.js";
+import { getData, getDataById, writeData, deleteData, updateData ,getPostsOfFollowing} from "../dal/postDal.js";
 
 // משיכת כל הפוסטים
 export async function getPosts() {
@@ -49,3 +49,6 @@ export async function updateSinglePost(newData) {
     return updated ? true : false;
 }
 
+export async function getUserFeed(userId) {
+    return await getPostsOfFollowing(userId);
+}

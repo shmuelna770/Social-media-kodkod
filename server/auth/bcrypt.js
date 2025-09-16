@@ -5,7 +5,7 @@ export async function bcryptpassword(password) {
     return pass;
 }
 
-export async function checkPass(pass1,paas2){
-     const check = await bcrypt.compare(pass1,paas2)
+export async function checkPass(pass1,paas2){    
+     const check = await bcrypt.compare(pass1,paas2)          
      return check
 }

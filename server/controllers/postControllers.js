@@ -1,4 +1,4 @@
-import { getPosts, writeNewPost, deletePost, updateSinglePost, getPostById } from "../services/postsService.js";
+import { getPosts, writeNewPost, deletePost, updateSinglePost, getPostById ,getUserFeed} from "../services/postsService.js";
 
 export async function getAllPosts(req, res) {
     try {
@@ -59,5 +59,17 @@ export async function updatePostController(req, res) {
     }
 }
 
+
+
+export async function getFeed(req, res) {
+    try {
+        const userId = req.params.id;         
+        const posts = await getUserFeed(userId);
+        res.json(posts);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
+    }
+}
 
 
