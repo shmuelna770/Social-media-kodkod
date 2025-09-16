@@ -1,4 +1,4 @@
-import { getAllUsers, getUser, registerUser } from "../services/usersService.js";
+import { getAllUsers, getUser, registerUser , loginUser} from "../services/usersService.js";
 
 // קבלת כל המשתמשים
 export async function getUsersController(req, res) {
@@ -40,10 +40,13 @@ export async function createUserController(req, res) {
 
 export async function loginUserController(req, res) {
     const { userName, password } = req.body;
+    console.log(req.body);
+    
     if (!userName || !password)
+
         return res.status(400).json({ msg: "Username and password required" });
     try {
-        const result = await loginUser(userName, password);
+        const result = await loginUser(userName, password);        
         if (!result.success) {
             if (result.reason === "user_not_found") {
                 return res.status(404).json({ msg: "User not found" });
@@ -57,8 +60,8 @@ export async function loginUserController(req, res) {
             secure: process.env.NODE_ENV === "production",
             maxAge: 24 * 60 * 60 * 1000 // 1 יום
         });
-
-        res.status(200).json({ msg: "Login successful", user: result.user });
+        
+        res.status(200).json({ msg: "Login successful", user: result });
 
     } catch (error) {
         res.status(500).json({ error: "Failed to login" });

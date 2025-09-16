@@ -3,58 +3,50 @@ import type { PostProp } from "../comps/types";
 import Header from "../comps/Header";
 import Footer from "../comps/Footer";
 import "../index.css"
-import { useEffect, useState } from "react";
 
-// const posts: PostProp[] = [
-//   {
-//     username: "shmuel",
-//     profileImg: "https://i.pravatar.cc/150?img=3",
-//     postImg: "https://picsum.photos/500/500",
-//     description: "Enjoying the sunny day at the park! 🌞",
-//     likes: 12,
-//     time: "2 hours ago",
-//     comments: [],
-//   },
-//   {
-//     username: "yehuda",
-//     profileImg: "https://i.pravatar.cc/150?img=4",
-//     postImg: "https://picsum.photos/500/501",
-//     description:
-//       "Look at this amazing food I made hid jbdkj kbkj jd kjkj ck kj k kjew nlekw kjwk wke hkvw 🍝",
-//     likes: 8,
-//     time: "1 hour ago",
-//     comments: [],
-//   },
-//   {
-//     username: "yehuda",
-//     profileImg: "https://i.pravatar.cc/150?img=4",
-//     postImg: "https://picsum.photos/500/501",
-//     description:
-//       "Look at this amazing food I made hid jbdkj kbkj jd kjkj ck kj k kjew nlekw kjwk wke hkvw 🍝",
-//     likes: 8,
-//     time: "1 hour ago",
-//     comments: [],
-//   },
-//   {
-//     username: "yehuda",
-//     profileImg: "https://i.pravatar.cc/150?img=4",
-//     postImg: "https://picsum.photos/500/501",
-//     description:
-//       "Look at this amazing food I made hid jbdkj kbkj jd kjkj ck kj k kjew nlekw kjwk wke hkvw 🍝",
-//     likes: 8,
-//     time: "1 hour ago",
-//     comments: [],
-//   },
-// ];
+const posts: PostProp[] = [
+  {
+    username: "shmuel",
+    profileImg: "https://i.pravatar.cc/150?img=3",
+    postImg: "https://picsum.photos/500/500",
+    description: "Enjoying the sunny day at the park! 🌞",
+    likes: 12,
+    time: "2 hours ago",
+    comments: [],
+  },
+  {
+    username: "yehuda",
+    profileImg: "https://i.pravatar.cc/150?img=4",
+    postImg: "https://picsum.photos/500/501",
+    description:
+      "Look at this amazing food I made hid jbdkj kbkj jd kjkj ck kj k kjew nlekw kjwk wke hkvw 🍝",
+    likes: 8,
+    time: "1 hour ago",
+    comments: [],
+  },
+  {
+    username: "yehuda",
+    profileImg: "https://i.pravatar.cc/150?img=4",
+    postImg: "https://picsum.photos/500/501",
+    description:
+      "Look at this amazing food I made hid jbdkj kbkj jd kjkj ck kj k kjew nlekw kjwk wke hkvw 🍝",
+    likes: 8,
+    time: "1 hour ago",
+    comments: [],
+  },
+  {
+    username: "yehuda",
+    profileImg: "https://i.pravatar.cc/150?img=4",
+    postImg: "https://picsum.photos/500/501",
+    description:
+      "Look at this amazing food I made hid jbdkj kbkj jd kjkj ck kj k kjew nlekw kjwk wke hkvw 🍝",
+    likes: 8,
+    time: "1 hour ago",
+    comments: [],
+  },
+];
 
 export default function HomeFeed() {
-    const [posts, setPosts] = useState<PostProp[]>([]);
-    useEffect(()=>{
-        fetch("http://localhost:3004/posts")
-        .then(res => res.json())
-        .then(data => setPosts(data))
-        .catch(err => console.error(err))
-    })
   return (
     <div className="posts-container">
         <Header/>

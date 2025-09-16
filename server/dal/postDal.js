@@ -68,3 +68,27 @@ export async function updateData(id, updatedFields) {
     }
     return data;
 }
+
+
+    export async function getPostsOfFollowing(userId) {
+        const { data: following, error: followError } = await supabase
+            .from("followers")
+            .select("followingId")
+            .eq("followerId", userId);
+        console.log('w',following);
+        
+        if (followError) throw followError;
+        if (!following || following.length === 0) return [];
+
+        const followingIds = following.map(f => f.followingId);
+
+        const { data: posts, error: postsError } = await supabase
+            .from("posts")
+            .select("*")
+            .in("userId", followingIds)
+            .order("created_at", { ascending: false });
+
+        if (postsError) throw postsError;
+
+        return posts;
+    }
