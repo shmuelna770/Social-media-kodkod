@@ -1,4 +1,4 @@
-import { getPosts, writeNewPost, deletePost, updateSinglePost, getPostById ,getUserFeed} from "../services/postsService.js";
+import { getPosts, writeNewPost, deletePost, updateSinglePost, getPostById, getUserFeed, getPostsByUserId } from "../services/postsService.js";
 
 export async function getAllPosts(req, res) {
     try {
@@ -9,11 +9,23 @@ export async function getAllPosts(req, res) {
     }
 }
 
+
+export async function getPostsByUserIdController(req, res) {
+    const userId = req.body;
+    try {
+        const post = await getPostsByUserId(userId);
+        if (!post) return res.status(404).json({ msg: "Posts snot found" });
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to read posts" });
+    }
+}
+
 export async function getPostByIdController(req, res) {
     const id = parseInt(req.params.id);
     try {
         const post = await getPostById(id);
-        if (!post) return res.status(404).json({ msg: "Post not found" });
+        if (!post) return res.status(404).json({ msg: "post not found" });
         res.status(200).json(post);
     } catch (error) {
         res.status(500).json({ error: "Failed to read post" });
@@ -22,8 +34,8 @@ export async function getPostByIdController(req, res) {
 
 export async function createPost(req, res) {
     const newPost = req.body;
-    console.log('post',newPost);
-    
+    console.log('post', newPost);
+
     if (!newPost.image_url || !newPost.description) {
         return res.status(400).json({ msg: "Image and description required" });
     }
@@ -63,7 +75,7 @@ export async function updatePostController(req, res) {
 
 export async function getFeed(req, res) {
     try {
-        const userId = req.params.id;         
+        const userId = req.params.id;
         const posts = await getUserFeed(userId);
         res.json(posts);
     } catch (err) {

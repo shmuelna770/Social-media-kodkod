@@ -9,16 +9,20 @@
   background: #f3f2ef; /* רקע אפור-בהיר */
   font-family: Arial, sans-serif;
   direction: rtl; /* כי הטקסט בעברית */
+  padding: 10px; /* ריווח פנימי למובייל */
+  box-sizing: border-box;
 }
 
 /* קופסה של הטפסים */
 .login-box {
-  background: white;
+  background: rgb(223, 215, 215);
   padding: 30px 40px;
   border-radius: 12px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  width: 350px;
+  width: 100%;
+  max-width: 400px; /* לא יתפוס יותר מדי רוחב במסכים גדולים */
   text-align: center;
+  box-sizing: border-box;
 }
 
 /* כותרות */
@@ -42,22 +46,23 @@
 /* שדות טופס */
 .login-box form input {
   width: 100%;
-  padding: 10px;
+  padding: 12px; /* יותר נוח למגע */
   margin: 8px 0;
   border: 1px solid #ddd;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 16px; /* קריא יותר במובייל */
+  box-sizing: border-box;
 }
 
 /* כפתורים */
 .login-box form button {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   background: #545c60;
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 16px;
   cursor: pointer;
   margin-top: 10px;
   transition: background 0.3s;
@@ -87,6 +92,34 @@
   text-decoration: underline;
 }
 
+/* תמונות */
 img {
-  width: 20rem;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+/* התאמות מובייל */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 20px 20px; /* הקטנת פנלים */
+  }
+
+  .login-box h1 {
+    font-size: 22px;
+  }
+
+  .login-box h2 {
+    font-size: 16px;
+  }
+
+  .login-box h3 {
+    font-size: 14px;
+  }
+
+  .login-box form input,
+  .login-box form button {
+    font-size: 14px;
+    padding: 10px;
+  }
 }
