@@ -6,11 +6,10 @@ export type Comment = {
 };
 
 export type PostProp = {
-  username: string;
-  profileImg: string;
-  postImg: string;
+  id: number;
+  created_at: string;
+  userId: number;
+  imageUrl: string;
   description: string;
-  likes?: number;
-  time: string;
-  comments?: Comment[];
+  sumOfLikes: number;
 };
