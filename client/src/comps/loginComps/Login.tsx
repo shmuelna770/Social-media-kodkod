@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router";
 import "../style/Login.css";
 
 export default function Login() {
@@ -7,6 +8,8 @@ export default function Login() {
   const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -28,9 +31,13 @@ export default function Login() {
         throw new Error(data.error);
       }
 
-      setUser(data.user);
-      setMessage("התחברת בהצלחה!");
-    } catch (err: any) {
+      if (res.ok) {
+        navigate('/feed')
+        localStorage.setItem("id", data.id);
+      }
+      setUser(data.id);
+    }
+    catch (err: any) {
       console.error("Error during login:", err);
       setMessage("שגיאה: " + err.message);
     }
