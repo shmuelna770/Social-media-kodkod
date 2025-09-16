@@ -11,10 +11,10 @@ export async function getAllPosts(req, res) {
 
 
 export async function getPostsByUserIdController(req, res) {
-    const userId = req.body;
     try {
+        const userId = parseInt(req.params.id);
         const post = await getPostsByUserId(userId);
-        if (!post) return res.status(404).json({ msg: "Posts snot found" });
+        if (!post) return res.status(404).json({ msg: "Posts not found" });
         res.status(200).json(post);
     } catch (error) {
         res.status(500).json({ error: "Failed to read posts" });
@@ -22,8 +22,8 @@ export async function getPostsByUserIdController(req, res) {
 }
 
 export async function getPostByIdController(req, res) {
-    const id = parseInt(req.params.id);
     try {
+        const id = parseInt(req.params.id);
         const post = await getPostById(id);
         if (!post) return res.status(404).json({ msg: "post not found" });
         res.status(200).json(post);

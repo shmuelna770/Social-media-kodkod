@@ -21,14 +21,13 @@ export default function Post(post: PostProp) {
       <PostHeader username={userName} profileImg={post.imageUrl} />
       <PostImage postImg={post.imageUrl} />
       <PostActions
+        commentsCount={0}
         likeCount={likeCount}
         onLike={handleLike}
         onToggleComments={() => console.log("comments clicked")}
       />
       <PostDescription username={userName} description={post.description} />
       <p>{post.created_at}</p>
-
-
     </div>
   );
 }

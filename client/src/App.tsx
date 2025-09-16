@@ -4,20 +4,24 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import HomeFeed from "./pages/HomeFeed";
 import HomePage from "./comps/loginComps/HomePage";
+import AddNewPost from "./comps/AddNewPost";
+import Feed from "./pages/Feed";
 import SearchPage from "./comps/Search";
 
 function App() {
   return (
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/Signup" element={<SignupPage />} />
-        <Route path="/feed" element={<HomeFeed />} />
-        <Route path="/Login" element={<LoginPage />} />
-        <Route path="/ProfilePage" element={<ProfilePage userId="u1" />} />
-        <Route path="/Search" element={<SearchPage />} />
-        <Route path="/Settings" element={<div>Settings Page</div>} />
-        <Route path="/CreatePost" element={<div>Create Post Page</div>} />
-      </Routes>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/Signup" element={<SignupPage />} />
+      <Route path="/feed" element={<HomeFeed />} >
+        <Route path="" element={<Feed />} />
+        <Route path="add-new-post" element={<AddNewPost />} />
+        <Route path="profile-page" element={<ProfilePage userId="u1" />} />
+        <Route path="Settings" element={<div>Settings Page</div>} />
+        <Route path="Search" element={<SearchPage />} />
+      </Route>
+      <Route path="/Login" element={<LoginPage />} />
+    </Routes>
   );
 }
 
