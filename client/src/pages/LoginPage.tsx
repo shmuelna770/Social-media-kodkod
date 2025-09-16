@@ -14,7 +14,7 @@ function LoginPage() {
                     <img src={logo} alt="KodkodX Logo" />
                     <h2>כניסה</h2>
                     <Login />
-                    <Link to="/" className="login-link">אין לך חשבון? הירשם כאן</Link>
+                    <Link to="/Signup" className="login-link">אין לך חשבון? הירשם כאן</Link>
                     <h3>או כניסה עם Google</h3>
                     <div className="google-button">
                         <GoogleSignIn />
