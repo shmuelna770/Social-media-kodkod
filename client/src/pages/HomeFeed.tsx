@@ -3,58 +3,44 @@ import type { PostProp } from "../comps/types";
 import Header from "../comps/Header";
 import Footer from "../comps/Footer";
 import "../index.css"
+import { useEffect, useState } from "react";
+import makeRequest from "../utils/makeRequest";
 
-const posts: PostProp[] = [
-  {
-    username: "shmuel",
-    profileImg: "https://i.pravatar.cc/150?img=3",
-    postImg: "https://picsum.photos/500/500",
-    description: "Enjoying the sunny day at the park! 🌞",
-    likes: 12,
-    time: "2 hours ago",
-    comments: [],
-  },
-  {
-    username: "yehuda",
-    profileImg: "https://i.pravatar.cc/150?img=4",
-    postImg: "https://picsum.photos/500/501",
-    description:
-      "Look at this amazing food I made hid jbdkj kbkj jd kjkj ck kj k kjew nlekw kjwk wke hkvw 🍝",
-    likes: 8,
-    time: "1 hour ago",
-    comments: [],
-  },
-  {
-    username: "yehuda",
-    profileImg: "https://i.pravatar.cc/150?img=4",
-    postImg: "https://picsum.photos/500/501",
-    description:
-      "Look at this amazing food I made hid jbdkj kbkj jd kjkj ck kj k kjew nlekw kjwk wke hkvw 🍝",
-    likes: 8,
-    time: "1 hour ago",
-    comments: [],
-  },
-  {
-    username: "yehuda",
-    profileImg: "https://i.pravatar.cc/150?img=4",
-    postImg: "https://picsum.photos/500/501",
-    description:
-      "Look at this amazing food I made hid jbdkj kbkj jd kjkj ck kj k kjew nlekw kjwk wke hkvw 🍝",
-    likes: 8,
-    time: "1 hour ago",
-    comments: [],
-  },
-];
 
 export default function HomeFeed() {
+
+  const [posts, setPosts] = useState<PostProp[]>([]);
+  const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false)
+
+  useEffect(() => {
+    const fetchFeed = async () => {
+      const userId = localStorage.getItem('id');
+      if (!userId) {
+        setMessage(`User not found`)
+        return
+      }
+      setLoading(true)
+      const allPosts = await makeRequest(`/posts/feed/${userId}`, 'GET')
+      setLoading(false)
+      if (!allPosts) {
+        setMessage(allPosts)
+        return
+      }
+      setPosts(allPosts)
+
+    }
+    fetchFeed()
+  }, [])
+
   return (
     <div className="posts-container">
-        <Header/>
+      <Header />
       <div className="feed">
-        {posts.map((p, idx) => (
-          <Post key={idx} {...p} />
-        ))}
-        <Footer/>
+        {!message && posts.map((post, idx) => (<Post key={idx} {...post} />))}
+        {loading && <p className='loading'>Loading...</p>}
+        {message && !loading && <p className='failed'>{message}</p>}
+        <Footer />
       </div>
     </div>
   );
