@@ -10,11 +10,11 @@ export async function getUsersController(req, res) {
     }
 }
 
-// קבלת משתמש לפי userName
+// קבלת משתמש לפי id
 export async function getUserController(req, res) {
-    const userName = req.params.userName;
+    const id = req.params.id;
     try {
-        const user = await getUser(userName);
+        const user = await getUser(id);
         if (!user) return res.status(404).json({ msg: "User not found" });
         res.status(200).json(user);
     } catch (error) {
