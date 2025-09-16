@@ -8,7 +8,7 @@ export default function Footer() {
       <Link to='profile-page'><FaUser size={24} /></Link>
       <Link to='add-new-post'><FaPlusSquare size={24} /></Link>
       <Link to=''><FaHome size={24} /></Link>
-      <button><FaSearch size={24} /></button>
+      <button> <Link to='Search'><FaSearch size={24} /></Link></button>
       <button><FaCog size={24} /></button>
     </div>
   );
