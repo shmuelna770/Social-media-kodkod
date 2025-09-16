@@ -4,10 +4,16 @@ import makeRequest from "../utils/makeRequest";
 const AddNewPost = () => {
     const [userId, setUserId] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const [imageUrl, setImageUrl] = useState<string>('');
+    const [file, setFile] = useState<File | undefined>();
     const [message, setMessage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false)
 
+    function handleOnChange(e: FormEvent<HTMLInputElement>) {
+        const target = e.target as HTMLInputElement & {
+            files: FileList
+        }
+        setFile(target.files[0])
+    }
 
     useEffect(() => {
         const id = localStorage.getItem("id")
@@ -16,15 +22,16 @@ const AddNewPost = () => {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const body = {
-            imageUrl,
-            description
-        }
+
+        if (!file) return;
+        const formData = new FormData();
+        formData.set('file', file)
+        formData.set('description', description)
 
         try {
             console.log(userId)
             setLoading(true)
-            const res = await makeRequest(`/posts/${userId}`, 'POST', body)
+            const res = await makeRequest(`/posts/${userId}`, 'POST', formData, true)
             setLoading(false)
             setMessage(res)
         } catch (err: any) {
@@ -50,9 +57,10 @@ const AddNewPost = () => {
                     Image
                     <input
                         id="file"
+                        accept="image/*"
                         required
-                        type="text"
-                        onChange={(e) => setImageUrl(e.target.value)}
+                        type="file"
+                        onChange={handleOnChange}
                     />
                 </label>
 
