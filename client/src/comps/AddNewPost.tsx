@@ -31,9 +31,9 @@ const AddNewPost = () => {
         try {
             console.log(userId)
             setLoading(true)
-            const res = await makeRequest(`/posts/${userId}`, 'POST', formData, true)
+            const res = await makeRequest(`/posts/add/${userId}`, 'POST', formData, true)
             setLoading(false)
-            setMessage(res)
+            setMessage(res.msg)
         } catch (err: any) {
             setMessage(err.message)
         };
