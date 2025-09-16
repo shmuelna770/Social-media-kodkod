@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { PostProp } from "./types";
 import PostHeader from "./PostHeader";
 import PostImage from "./PostImage";
@@ -7,10 +7,14 @@ import PostDescription from "./PostDescription";
 import "../style/post.css"
 
 export default function Post(post: PostProp) {
-  const [likeCount, setLikeCount] = useState(post.sumOfLikes);
+  const [likeCount, setLikeCount] = useState<number>(0);
   const [userName, setUserName] = useState<string>('Unknown')
 
-  const handleLike = () => setLikeCount(likeCount + 1);
+  const handleLike = () => setLikeCount(prev => prev + 1);
+
+  useEffect(() => {
+    setLikeCount(post.sumOfLikes)
+  }, []);
 
   return (
     <div>
