@@ -69,6 +69,6 @@ export default function Login() {
       <button type="submit">היכנס</button>
 
       <div className="message">{message}</div>
-    </form>
-  );
+    </form>
+  );
 }
