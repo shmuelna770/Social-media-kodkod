@@ -15,8 +15,8 @@
 }
 
 .main.header img.descrip {
-  height: 40px;
-  width: 270px;          
+  height: 50px;
+  width: auto;   
 }
 
 /* ======= Media Query לפלאפון ======= */

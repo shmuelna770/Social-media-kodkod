@@ -58,7 +58,8 @@ export default function SearchPage() {
                 <ul className="user-list">
                     {filteredUsers.map((user) => (
                         <li key={user.id}>
-                            <Link to={`/ProfilePage?userId=${user.id}`} className="user-link">
+                            <Link to={`/feed/profile-page/${user.id}`} className="user-link"
+>
                                 <img
                                     src={user.profileImg || logo}
                                     alt={user.userName}
