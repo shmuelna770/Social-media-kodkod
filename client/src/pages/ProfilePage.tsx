@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
-import "../styles/profile.css";
+import "../style/profile.css";
 
 export default function ProfilePage() {
   const { id } = useParams(); // מזהה המשתמש מה-URL
