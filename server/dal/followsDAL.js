@@ -42,7 +42,7 @@ export async function getFollowersCount(userId) {
 }
 
 // ספירה של נעקבים
-export async function getFollowingCount(userId) {
+export async function getFollowingCount(userId) {    
     const { count } = await supabase
         .from("followers")
         .select("followingId", { count: "exact", head: true })

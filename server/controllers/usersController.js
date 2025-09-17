@@ -15,6 +15,7 @@ export async function getUserController(req, res) {
     const id = req.params.id;
     try {
         const user = await getUser(id);
+        
         if (!user) return res.status(404).json({ msg: "User not found" });
         res.status(200).json(user);
     } catch (error) {
@@ -40,14 +41,12 @@ export async function createUserController(req, res) {
 
 export async function loginUserController(req, res) {
     const { userName, password } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     
     if (!userName || !password)
         return res.status(400).json({ msg: "Username and password required" });
     try {
-        const result = await loginUser(userName, password);
-        console.log('z',result);
-                
+        const result = await loginUser(userName, password);                
         if (!result.success) {
             if (result.reason === "user_not_found") {
                 return res.status(404).json({ msg: "User not found" });
@@ -56,14 +55,9 @@ export async function loginUserController(req, res) {
                 return res.status(401).json({ msg: "Incorrect password" });
             }
         }
-        res.cookie("token", result.token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            maxAge: 24 * 60 * 60 * 1000 // 1 יום
-        });
-        
+        console.log('e',result.token);
+        res.cookie("token", result.token);
         res.status(200).json({ msg: "Login successful", user: result });
-
     } catch (error) {
         res.status(500).json({ error: "Failed to login" });
     }

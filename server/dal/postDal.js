@@ -20,7 +20,8 @@ export async function getDataUserId(userId) {
     const { data, error } = await supabase
         .from("posts")
         .select("*")
-        .eq("userId", userId.userId)
+        .eq("userId", userId)
+        
     if (error) {
         console.error("Error fetching post by userName:", error);
         return null;
@@ -46,7 +47,7 @@ export async function getDataById(id) {
 export async function writeData(newPost) {
     const { data, error } = await supabase
         .from("posts")
-        .insert([newPost])
+        .insert([newPost,])
         .select();
     if (error) {
         console.error("Error inserting post:", error);

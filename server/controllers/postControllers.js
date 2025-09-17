@@ -12,9 +12,11 @@ export async function getAllPosts(req, res) {
 
 
 export async function getPostsByUserIdController(req, res) {
+    const userId = parseInt(req.params.userId);
+    // console.log('w',userId);
     try {
-        const userId = parseInt(req.params.id);
-        const post = await getPostsByUserId(userId);
+        
+        const post = await getPostsByUserId(userId);                
         if (!post) return res.status(404).json({ msg: "Posts not found" });
         res.status(200).json(post);
     } catch (error) {

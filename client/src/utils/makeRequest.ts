@@ -1,11 +1,18 @@
-export default async function makeRequest(url: string, method: string = 'GET', body: any = null, isFile: boolean = false) {
+export default async function makeRequest(url: string, method: string = 'GET', body: any = null, isFile: boolean = false,
+) {
+    const token = localStorage.getItem("token")
+    if (!token) {
+        alert("you need to login first")
+        }
+
+
     const SERVER_URL = "http://localhost:3004"
     try {
         let res
         if (isFile) {
 
             await new Promise(resolve => setTimeout(resolve, 500))
-            
+
             res = await fetch(`${SERVER_URL}${url}`, {
                 method,
                 body,
@@ -14,7 +21,11 @@ export default async function makeRequest(url: string, method: string = 'GET', b
         } else {
             const options: RequestInit = {
                 method,
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`,
+
+                },
                 credentials: 'include'
             };
 
