@@ -2,8 +2,9 @@ export default async function makeRequest(url: string, method: string = 'GET', b
 ) {
     const token = localStorage.getItem("token")
     if (!token) {
-        alert("you need to login first")
-        }
+        window.location.href = "/login";
+        return;
+    }
 
 
     const SERVER_URL = "http://localhost:3004"
