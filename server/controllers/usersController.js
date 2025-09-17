@@ -1,4 +1,5 @@
-import { getAllUsers, getUser, registerUser , loginUser} from "../services/usersService.js";
+import { getAllUsers, getUser, registerUser, loginUser } from "../services/usersService.js";
+import path from 'path'
 
 // קבלת כל המשתמשים
 export async function getUsersController(req, res) {
@@ -29,11 +30,17 @@ export async function createUserController(req, res) {
         return res.status(400).json({ msg: "userName and password required" });
     }
     try {
+        if (req.files && req.files.file) {
+            const { file } = req.files;
+            file.name = `${Date.now()}_${file.name}`
+            file.mv(path.join("./public/profileImages", file.name));
+            newUser.profileImg = `http://localhost:3004/${file.name}`
+        }
         const success = await registerUser(newUser);
         if (!success) return res.status(400).json({ msg: "Failed to create user" });
         res.status(201).json({ msg: "User created" });
     } catch (error) {
-        res.status(500).json({ error: "Failed to create user" });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -41,13 +48,13 @@ export async function createUserController(req, res) {
 export async function loginUserController(req, res) {
     const { userName, password } = req.body;
     console.log(req.body);
-    
+
     if (!userName || !password)
         return res.status(400).json({ msg: "Username and password required" });
     try {
         const result = await loginUser(userName, password);
-        console.log('z',result);
-                
+        console.log('z', result);
+
         if (!result.success) {
             if (result.reason === "user_not_found") {
                 return res.status(404).json({ msg: "User not found" });
@@ -61,7 +68,7 @@ export async function loginUserController(req, res) {
             secure: process.env.NODE_ENV === "production",
             maxAge: 24 * 60 * 60 * 1000 // 1 יום
         });
-        
+
         res.status(200).json({ msg: "Login successful", user: result });
 
     } catch (error) {

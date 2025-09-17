@@ -34,26 +34,34 @@ export async function getPostByIdController(req, res) {
 }
 
 export async function createPost(req, res) {
-    const userId = req.params.id
+    const userId = req.params.id;
     const body = req.body;
-    body.userId = userId
-    console.log('post', body);
+    body.userId = userId;
 
     if (!body.description || !body.userId) {
         return res.status(400).json({ msg: "Description and userId required" });
     }
+
     try {
-        const { file } = req.files;
-        file.name = `${Date.now()}_${file.name}`
-        file.mv(path.join("./public/images", file.name));
-        body.imageUrl = `http://localhost:3004/${file.name}`
+        if (req.files && req.files.file) {
+            const file = req.files.file;
+            file.name = `${Date.now()}_${file.name}`;
+            await file.mv(path.join("./public/postsImages", file.name));
+            body.imageUrl = `http://localhost:3004/${file.name}`;
+        }
+
         const success = await writeNewPost(body);
-        if (!success) return res.status(400).json({ msg: "Failed to create post" });
+        if (!success) {
+            return res.status(400).json({ msg: "Failed to create post" });
+        }
+
         res.status(201).json({ success: true, msg: "Post created" });
     } catch (error) {
+        console.error("Error creating post:", error);
         res.status(500).json({ error: "Failed to create post" });
     }
 }
+
 
 
 export async function deletePostController(req, res) {
