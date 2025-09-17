@@ -17,9 +17,6 @@ export default function ProfilePage() {
 
   const currentUserId = localStorage.getItem("id"); // מזהה המשתמש הנוכחי
 
-export default function ProfilePage({ userId }: { userId: string }) {
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
   useEffect(() => {
     if (!id) return;
 
