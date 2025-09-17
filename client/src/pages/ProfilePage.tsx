@@ -1,83 +1,86 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import "../style/profile.css";
+import makeRequest from "../utils/makeRequest";
+
+type Post = {
+  id: string;
+  imageUrl: string;
+  description?: string;
+};
+
+type Profile = {
+  userName: string;
+  profileImg?: string;
+  status?: string;
+};
 
 export default function ProfilePage() {
-  const { id } = useParams(); // מזהה המשתמש מה-URL
-  const [profile, setProfile] = useState({
-    userName: "",
-    profileImg: "",
-    status: "",
-  });
-  type Post = { id: string; imageUrl: string };
-  const [posts, setPosts] = useState<Post[]>([]); // {id, imageUrl}
+  const { id } = useParams<{ id: string }>();
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [followersCount, setFollowersCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const currentUserId = localStorage.getItem("id"); // מזהה המשתמש הנוכחי
+  const currentUserId = localStorage.getItem("id");
 
   useEffect(() => {
     if (!id) return;
 
     async function fetchData() {
       try {
-        // פרטי המשתמש
-        const profileRes = await fetch(`http://localhost:3004/user/${id}`);
-        const profileData = await profileRes.json();
-        setProfile({
-          userName: profileData.userName,
-          profileImg: profileData.profileImg,
-          status: profileData.status || "",
-        });
+        // ===== פרטי המשתמש =====
+        const profileData = await makeRequest(`/user/${id}`);
+        if (!profileData) throw new Error("משתמש לא נמצא");
+        setProfile(profileData);
 
-        // הפוסטים של המשתמש
-        const postsRes = await fetch(`http://localhost:3004/posts/${id}`);
-        const postsData = await postsRes.json();
-        setPosts(postsData.map((p: { id: string; imageUrl: string }) => ({ id: p.id, imageUrl: p.imageUrl })));
+        // ===== הפוסטים של המשתמש =====
+        const postsData = await makeRequest(`/posts/${id}`);
+        if (Array.isArray(postsData)) setPosts(postsData);
 
-        // מספר עוקבים
-        const followersRes = await fetch(`http://localhost:3004/follows/followers/count/${id}`);
-        const followersData = await followersRes.json();
-        setFollowersCount(followersData.followersCount || 0);
+        // ===== מספר עוקבים =====
+        const followersData = await makeRequest(
+          `/follows/followers/count/${id}`
+        );
+        if (followersData?.followersCount)
+          setFollowersCount(followersData.followersCount);
 
-        // מספר נעקבים
-        const followingRes = await fetch(`http://localhost:3004/follows/following/count/${id}`);
-        const followingData = await followingRes.json();
-        setFollowingCount(followingData.followingCount || 0);
+        // ===== מספר נעקבים =====
+        const followingData = await makeRequest(
+          `/follows/following/count/${id}`
+        );
+        if (followingData?.followingCount)
+          setFollowingCount(followingData.followingCount);
 
-        // בדיקה אם המשתמש הנוכחי עוקב אחרי המשתמש הזה
-        const checkFollowRes = await fetch(`http://localhost:3004/follows/check/${currentUserId}/${id}`);
-        const checkFollowData = await checkFollowRes.json();
-        setIsFollowing(checkFollowData.isFollowing);
-
-      } catch (err) {
+        // ===== בדיקה אם עוקבים =====
+        // אם השרת לא נותן את הנתיב הזה, נשאיר false
+        setIsFollowing(false);
+      } catch (err: any) {
         console.error("Error fetching profile data:", err);
+        setError(err.message || "שגיאה בטעינת הנתונים");
       }
     }
 
     fetchData();
-  }, [id, currentUserId]);
+  }, [id]);
 
   const handleFollowToggle = async () => {
-    try {
-      if (!currentUserId) return;
+    if (!currentUserId || !id) return;
 
+    try {
       if (isFollowing) {
-        // מבצע unfollow
-        await fetch(`http://localhost:3004/follows`, {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ followerId: currentUserId, followingId: id }),
+        await makeRequest(`/follows`, "DELETE", {
+          followerId: currentUserId,
+          followingId: id,
         });
         setIsFollowing(false);
         setFollowersCount((prev) => prev - 1);
       } else {
-        // מבצע follow
-        await fetch(`http://localhost:3004/follows`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ followerId: currentUserId, followingId: id }),
+        await makeRequest(`/follows`, "POST", {
+          followerId: currentUserId,
+          followingId: id,
         });
         setIsFollowing(true);
         setFollowersCount((prev) => prev + 1);
@@ -87,24 +90,29 @@ export default function ProfilePage() {
     }
   };
 
-  if (!profile.userName) return <p>טוען פרופיל...</p>;
+  if (error) return <p>{error}</p>;
+  if (!profile) return <p>טוען פרופיל...</p>;
 
   return (
     <main className="profile-root" aria-labelledby="profile-heading">
       <header className="profile-header">
-        <img
-          className="avatar"
-          src={profile.profileImg}
-          alt={`${profile.userName} avatar`}
-          width={120}
-          height={120}
-          loading="lazy"
-        />
+        {profile.profileImg && (
+          <img
+            className="avatar"
+            src={profile.profileImg || "/images/default-avatar.png"}
+            alt={`${profile.userName} avatar`}
+            width={120}
+            height={120}
+            loading="lazy"
+          />
+        )}
         <div className="profile-meta">
-          <h1 id="profile-heading" className="name">{profile.userName}</h1>
-          <p className="bio">{profile.status}</p>
+          <h1 id="profile-heading" className="name">
+            {profile.userName}
+          </h1>
+          <p className="bio">{profile.status || ""}</p>
           <button onClick={handleFollowToggle}>
-            {isFollowing ? "להפסק לעקוב" : "עקוב"}
+            {isFollowing ? "להפסיק לעקוב" : "עקוב"}
           </button>
           <ul className="stats" role="list">
             <li>
@@ -124,14 +132,19 @@ export default function ProfilePage() {
       </header>
 
       <section className="posts-grid">
-        {posts.map((post) => (
-          <div key={post.id} className="post">
-            <Link to={`/post/${post.id}`}>
-              <img src={post.imageUrl} alt="" loading="lazy" />
-            </Link>
-          </div>
-        ))}
-      </section>
+  {posts.map((post) => (
+    <div key={post.id} className="post">
+      <Link to={`/feed/post/${post.id}`}>
+        <img src={post.imageUrl} alt="" loading="lazy" />
+      </Link>
+      {/* קישור לפרופיל של המשתמש */}
+      <Link to={`/feed/profile-page/${id}`} className="post-user-link">
+        {profile.userName}
+      </Link>
+    </div>
+  ))}
+</section>
+
     </main>
   );
 }
