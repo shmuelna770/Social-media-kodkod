@@ -27,6 +27,7 @@ export async function getUserController(req, res) {
 // יצירת משתמש חדש
 export async function createUserController(req, res) {
     const newUser = req.body;
+    
     if (!newUser.userName || !newUser.password) {
         return res.status(400).json({ msg: "userName and password required" });
     }

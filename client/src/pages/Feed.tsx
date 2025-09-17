@@ -1,6 +1,6 @@
 import Post from "../comps/Post";
 
-import type { PostProp } from "../comps/types";
+import type { PostProp } from "../types/types";
 import "../index.css"
 import { useEffect, useState } from "react";
 import authMakeRequest from "../utils/authMakeRequest";

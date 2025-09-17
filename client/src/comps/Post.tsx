@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { PostProp, user } from "./types";
+import type { PostProp, user } from "../types/types";
 import PostHeader from "./PostHeader";
 import PostImage from "./PostImage";
 import PostActions from "./PostActions";
