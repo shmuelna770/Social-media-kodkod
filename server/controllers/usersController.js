@@ -41,7 +41,7 @@ export async function createUserController(req, res) {
         if (!success) return res.status(400).json({ msg: "Failed to create user" });
         res.status(201).json({ msg: "User created" });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ msg: error.message });
     }
 }
 

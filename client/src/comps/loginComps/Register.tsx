@@ -25,22 +25,34 @@ export default function Register() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    file && formData.set('file', file)
-    formData.set('firstName', firstName)
-    formData.set('lastName', lastName)
-    formData.set('userName', userName)
-    formData.set('password', password)
-
+    let formData;
+    if (file) {
+      formData = new FormData();
+      formData.set('file', file)
+      formData.set('firstName', firstName)
+      formData.set('lastName', lastName)
+      formData.set('userName', userName)
+      formData.set('password', password)
+    }
+    else {
+      formData = {
+        firstName,
+        lastName,
+        userName,
+        password
+      }
+    }
+    
     try {
       setLoading(true)
-      const res = await makeRequest('/user/add', 'POST', formData, true)
+      const res = await makeRequest('/user/add', 'POST', formData, file ? true : false)
+
       setLoading(false)
       if (res.msg === 'User created') {
         navigate('/Login')
       }
       else {
-        setMessage(res);
+        setMessage(res.msg);
       }
 
     } catch (error: any) {

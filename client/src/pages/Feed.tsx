@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import type { PostProp } from "../comps/types";
 import "../index.css"
 import { useEffect, useState } from "react";
-import makeRequest from "../utils/makeRequest";
+import authMakeRequest from "../utils/authMakeRequest";
 
 const Feed = () => {
     const navigate = useNavigate()
@@ -21,7 +21,7 @@ const Feed = () => {
                 return
             }
             setLoading(true)
-            const allPosts = await makeRequest(`/posts/feed/${userId}`, 'GET')
+            const allPosts = await authMakeRequest(`/posts/feed/${userId}`, 'GET')
             if (!allPosts || allPosts.length === 0) {
                 setMessage("Start follow to show posts")
             }
