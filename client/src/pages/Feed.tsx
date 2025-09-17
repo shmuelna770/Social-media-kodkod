@@ -1,4 +1,5 @@
 import Post from "../comps/Post";
+
 import type { PostProp } from "../comps/types";
 import "../index.css"
 import { useEffect, useState } from "react";

@@ -1,107 +1,134 @@
 import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router";
 import "../styles/profile.css";
 
-type UserProfile = {
-  id: string;
-  name: string;
-  avatarUrl?: string;
-  bio?: string;
-  stats?: {
-  posts: number;
-  followers: number;
-  following: number;
-  };
-  posts?: { id: string; imageUrl: string; caption?: string }[];
-};
+export default function ProfilePage() {
+  const { id } = useParams(); // מזהה המשתמש מה-URL
+  const [profile, setProfile] = useState({
+    userName: "",
+    profileImg: "",
+    status: "",
+  });
+  type Post = { id: string; imageUrl: string };
+  const [posts, setPosts] = useState<Post[]>([]); // {id, imageUrl}
+  const [followersCount, setFollowersCount] = useState(0);
+  const [followingCount, setFollowingCount] = useState(0);
+  const [isFollowing, setIsFollowing] = useState(false);
 
-const mockProfiles: Record<string, UserProfile> = {
-  u1: {
-    id: "u1",
-    name: " שם משתמש",
-    bio: "חובב קוד, פיצוחים ולמידה. פה לשפר את חוויית השחקנים.",
-    avatarUrl: "https://i.pravatar.cc/300",
-    stats: { posts: 8, followers: 1280, following: 80 },
-    posts: [
-      { id: "p1", imageUrl: "https://picsum.photos/id/1015/400/400", caption: "שקיעה קסומה" },
-      { id: "p2", imageUrl: "https://picsum.photos/id/1016/400/400", caption: "יום coding" },
-      { id: "p3", imageUrl: "https://picsum.photos/id/1018/400/400", caption: "פוסט נוסף" },
-      { id: "p4", imageUrl: "https://picsum.photos/id/1020/400/400", caption: "בוקר טוב" },
-      { id: "p5", imageUrl: "https://picsum.photos/id/1024/400/400", caption: "החידה של היום" },
-      { id: "p6", imageUrl: "https://picsum.photos/id/1032/400/400", caption: "עוד פוסט" },
-      { id: "p7", imageUrl: "https://picsum.photos/id/1035/400/400", caption: "נוף יפה" },
-      { id: "p8", imageUrl: "https://picsum.photos/id/1040/400/400", caption: "חברים" },
-    ],
-  },
-};
-
-export default function ProfilePage({ userId }: { userId: string }) {
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const currentUserId = localStorage.getItem("id"); // מזהה המשתמש הנוכחי
 
   useEffect(() => {
-    setProfile(mockProfiles[userId] || mockProfiles["u1"]);
-  }, [userId]);
+    if (!id) return;
 
-  const handleMenuToggle = (postId: string) => {
-    setOpenMenu(openMenu === postId ? null : postId);
+    async function fetchData() {
+      try {
+        // פרטי המשתמש
+        const profileRes = await fetch(`http://localhost:3004/user/${id}`);
+        const profileData = await profileRes.json();
+        setProfile({
+          userName: profileData.userName,
+          profileImg: profileData.profileImg,
+          status: profileData.status || "",
+        });
+
+        // הפוסטים של המשתמש
+        const postsRes = await fetch(`http://localhost:3004/posts/${id}`);
+        const postsData = await postsRes.json();
+        setPosts(postsData.map((p: { id: string; imageUrl: string }) => ({ id: p.id, imageUrl: p.imageUrl })));
+
+        // מספר עוקבים
+        const followersRes = await fetch(`http://localhost:3004/follows/followers/count/${id}`);
+        const followersData = await followersRes.json();
+        setFollowersCount(followersData.followersCount || 0);
+
+        // מספר נעקבים
+        const followingRes = await fetch(`http://localhost:3004/follows/following/count/${id}`);
+        const followingData = await followingRes.json();
+        setFollowingCount(followingData.followingCount || 0);
+
+        // בדיקה אם המשתמש הנוכחי עוקב אחרי המשתמש הזה
+        const checkFollowRes = await fetch(`http://localhost:3004/follows/check/${currentUserId}/${id}`);
+        const checkFollowData = await checkFollowRes.json();
+        setIsFollowing(checkFollowData.isFollowing);
+
+      } catch (err) {
+        console.error("Error fetching profile data:", err);
+      }
+    }
+
+    fetchData();
+  }, [id, currentUserId]);
+
+  const handleFollowToggle = async () => {
+    try {
+      if (!currentUserId) return;
+
+      if (isFollowing) {
+        // מבצע unfollow
+        await fetch(`http://localhost:3004/follows`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ followerId: currentUserId, followingId: id }),
+        });
+        setIsFollowing(false);
+        setFollowersCount((prev) => prev - 1);
+      } else {
+        // מבצע follow
+        await fetch(`http://localhost:3004/follows`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ followerId: currentUserId, followingId: id }),
+        });
+        setIsFollowing(true);
+        setFollowersCount((prev) => prev + 1);
+      }
+    } catch (err) {
+      console.error("Error updating follow status:", err);
+    }
   };
 
-  const handleUpdate = (postId: string) => {
-    alert(`עדכון לפוסט: ${postId}`);
-  };
-
-  const handleDelete = (postId: string) => {
-    alert(`מחיקה של פוסט: ${postId}`);
-  };
-
-  if (!profile) return <p>טוען פרופיל...</p>;
+  if (!profile.userName) return <p>טוען פרופיל...</p>;
 
   return (
     <main className="profile-root" aria-labelledby="profile-heading">
       <header className="profile-header">
         <img
           className="avatar"
-          src={profile.avatarUrl}
-          alt={`${profile.name} avatar`}
+          src={profile.profileImg}
+          alt={`${profile.userName} avatar`}
           width={120}
           height={120}
           loading="lazy"
         />
         <div className="profile-meta">
-          <h1 id="profile-heading" className="name">{profile.name}</h1>
-          <p className="bio">{profile.bio}</p>
+          <h1 id="profile-heading" className="name">{profile.userName}</h1>
+          <p className="bio">{profile.status}</p>
+          <button onClick={handleFollowToggle}>
+            {isFollowing ? "להפסק לעקוב" : "עקוב"}
+          </button>
           <ul className="stats" role="list">
             <li>
-              <strong>{profile.stats?.posts ?? 0}</strong>
+              <strong>{posts.length}</strong>
               <span>פוסטים</span>
             </li>
             <li>
-              <strong>{profile.stats?.followers ?? 0}</strong>
+              <strong>{followersCount}</strong>
               <span>עוקבים</span>
             </li>
             <li>
-              <strong>{profile.stats?.following ?? 0}</strong>
-              <span>עוקב/ת</span>👁️
+              <strong>{followingCount}</strong>
+              <span>עוקב/ת</span>
             </li>
           </ul>
         </div>
       </header>
 
       <section className="posts-grid">
-        {profile.posts?.map(post => (
+        {posts.map((post) => (
           <div key={post.id} className="post">
-            <img src={post.imageUrl} alt={post.caption} loading="lazy" />
-
-            <button className="burger-btn" onClick={() => handleMenuToggle(post.id)}>
-              ⋮
-            </button>
-
-            {openMenu === post.id && (
-              <div className="post-menu">
-                <button onClick={() => handleUpdate(post.id)}>✏️ עדכון</button>
-                <button onClick={() => handleDelete(post.id)}>🗑️ מחיקה</button>
-              </div>
-            )}
+            <Link to={`/post/${post.id}`}>
+              <img src={post.imageUrl} alt="" loading="lazy" />
+            </Link>
           </div>
         ))}
       </section>
