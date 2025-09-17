@@ -143,29 +143,34 @@ export default function ProfilePage() {
       </header>
 
       <section className="posts-grid">
-        {posts.map((post) => (
-          <div key={post.id} className="post">
-            <Link to={`/feed/post/${post.id}`}>
-              <img src={post.imageUrl} alt="" loading="lazy" />
-            </Link>
+  {posts.length === 0 ? (
+    <p className="no-posts">אין פוסטים</p>
+  ) : (
+    posts.map((post) => (
+      <div key={post.id} className="post">
+        <Link to={`/feed/post/${post.id}`}>
+          <img src={post.imageUrl} alt="" loading="lazy" />
+        </Link>
 
-            {/* בורגר רק אם זה הפרופיל של המשתמש עצמו */}
-            {isOwnProfile && (
-              <>
-                <button className="burger-btn" onClick={() => handleMenuToggle(post.id)}>
-                  ⋮
-                </button>
-                {openMenu === post.id && (
-                  <div className="post-menu">
-                    <button onClick={() => handleUpdate(post.id)}>✏️ עדכון</button>
-                    <button onClick={() => handleDelete(post.id)}>🗑️ מחיקה</button>
-                  </div>
-                )}
-              </>
+        {/* בורגר רק אם זה הפרופיל של המשתמש עצמו */}
+        {isOwnProfile && (
+          <>
+            <button className="burger-btn" onClick={() => handleMenuToggle(post.id)}>
+              ⋮
+            </button>
+            {openMenu === post.id && (
+              <div className="post-menu">
+                <button onClick={() => handleUpdate(post.id)}>✏️ עדכון</button>
+                <button onClick={() => handleDelete(post.id)}>🗑️ מחיקה</button>
+              </div>
             )}
-          </div>
-        ))}
-      </section>
+          </>
+        )}
+      </div>
+    ))
+  )}
+</section>
+
     </main>
   );
 }
