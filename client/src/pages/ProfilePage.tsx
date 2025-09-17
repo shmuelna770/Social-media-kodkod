@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router";
 import "../style/profile.css";
 
 export default function ProfilePage() {
-  const { id } = useParams(); // מזהה המשתמש מה-URL
+  const { id } = useParams();
   const [profile, setProfile] = useState({
     userName: "",
     profileImg: "",
