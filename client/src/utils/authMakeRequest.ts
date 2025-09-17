@@ -1,4 +1,9 @@
-export default async function makeRequest(url: string, method: string = 'GET', body: any = null, isFile: boolean = false) {
+export default async function authMakeRequest(url: string, method: string = 'GET', body: any = null, isFile: boolean = false) {
+    const token = localStorage.getItem("token")
+    if (!token) {
+        alert("you need to login first")
+    }
+
 
     const SERVER_URL = "http://localhost:3004"
     try {
@@ -16,7 +21,9 @@ export default async function makeRequest(url: string, method: string = 'GET', b
             const options: RequestInit = {
                 method,
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`,
+
                 },
                 credentials: 'include'
             };
@@ -26,6 +33,14 @@ export default async function makeRequest(url: string, method: string = 'GET', b
             await new Promise(resolve => setTimeout(resolve, 500))
 
             res = await fetch(`${SERVER_URL}${url}`, options);
+        }
+
+        if (res.status === 401) {
+            return ('Token expired of invalid. Please login again.');
+        }
+        if (!res.ok) {
+            const errText = await res.text();
+            return (errText);
         }
 
         const contentType = res.headers.get('Content-Type');

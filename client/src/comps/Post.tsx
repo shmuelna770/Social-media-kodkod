@@ -5,7 +5,7 @@ import PostImage from "./PostImage";
 import PostActions from "./PostActions";
 import PostDescription from "./PostDescription";
 import "../style/post.css"
-import makeRequest from "../utils/makeRequest";
+import authMakeRequest from "../utils/authMakeRequest";
 
 export default function Post(post: PostProp) {
   const [likeCount, setLikeCount] = useState<number>(0);
@@ -19,7 +19,7 @@ export default function Post(post: PostProp) {
   useEffect(() => {
     const fetchUserPost = async () => {
       setLoading(true)
-      const res = await makeRequest(`/user/${post.userId}`)
+      const res = await authMakeRequest(`/user/${post.userId}`)
       setLoading(false)
       console.log(res);
 
