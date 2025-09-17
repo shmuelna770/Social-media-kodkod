@@ -34,6 +34,6 @@ export async function countFollowers(userId) {
 }
 
 // מחזיר את מספר הנעקבים של המשתמש
-export async function countFollowing(userId) {
+export async function countFollowing(userId) {    
     return await getFollowingCount(userId);
 }

@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { UserProvider } from "../comps/loginComps/UserContext";
 import Register from "../comps/loginComps/Register";
 import GoogleSignIn from "../comps/loginComps/GoogleSignIn";
-import "../comps/style/LoginPage.css";
+import "../style/LoginPage.css";
 import logo from '../assets/x.png';
 function SignupPage() {
     return (

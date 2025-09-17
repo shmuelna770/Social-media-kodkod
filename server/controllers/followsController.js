@@ -52,7 +52,8 @@ export async function getFollowersCountController(req, res) {
 
 // מחזיר את מספר הנעקבים שהמשתמש עוקב אחריהם
 export async function getFollowingCountController(req, res) {
+    
     const { userId } = req.params;
-    const count = await countFollowing(userId);
+    const count = await countFollowing(userId);    
     res.json({ followingCount: count });
 }

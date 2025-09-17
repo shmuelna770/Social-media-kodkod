@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router";
-import "../style/Login.css";
+import "../../style/Login.css";
 
 export default function Login() {
   const { setUser } = useContext(UserContext);
@@ -19,7 +19,9 @@ export default function Login() {
     try {
       const res = await fetch("http://localhost:3004/user/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(userCredentials),
       });
 
@@ -33,6 +35,7 @@ export default function Login() {
 
       if (data.user.success == true) {
         localStorage.setItem("id", data.user.user.id);
+        localStorage.setItem("token",data.user.token)
         navigate('/feed')
       }
       else {

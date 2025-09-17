@@ -25,8 +25,11 @@
 
 /* שדה חיפוש */
 .search-input {
+    position: sticky;
+    top: 9%;
+    z-index: 1000;
     width: 100%;
-    padding: 12px 16px;
+    padding: 12px 1px;
     margin-bottom: 16px;
     font-size: 16px;
     border: 2px solid #cccccc;
@@ -82,11 +85,9 @@
 }
 
 .user-link:hover {
-    color: #007bff;
-    /* כחול עדין בהובר */
+    color: #556e65;
 }
 
-/* מצב שאין תוצאות */
 .no-results {
     text-align: center;
     color: #777;
