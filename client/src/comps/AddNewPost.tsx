@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
-import makeRequest from "../utils/makeRequest";
+import authMakeRequest from "../utils/authMakeRequest";
 import "../style/addPost.css"
 
 const AddNewPost = () => {
@@ -32,7 +32,7 @@ const AddNewPost = () => {
         try {
             console.log(userId)
             setLoading(true)
-            const res = await makeRequest(`/posts/add/${userId}`, 'POST', formData, true)
+            const res = await authMakeRequest(`/posts/add/${userId}`, 'POST', formData, true)
             setLoading(false)
             setMessage(res.msg)
         } catch (err: any) {

@@ -1,5 +1,5 @@
 // services/usersService.js
-import { getUsersData, getUserById, createUser ,getUserByUserName} from "../dal/usersDALl.js";
+import { getUsersData, getUserById, createUser, getUserByUserName } from "../dal/usersDALl.js";
 import { bcryptpassword, checkPass } from "../auth/bcrypt.js"
 const JWT_SECRET = process.env.JWT_SECRET || "secret_key";
 import jwt from "jsonwebtoken";
@@ -25,8 +25,6 @@ export async function registerUser(newUser) {
     const created = await createUser(newUser);
     return created ? true : false;
 }
-
-
 
 // כניסת משתמש ויצירת טוקן
 export async function loginUser(userName, password) {
