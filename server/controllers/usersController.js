@@ -15,6 +15,7 @@ export async function getUserController(req, res) {
     const id = req.params.id;
     try {
         const user = await getUser(id);
+        
         if (!user) return res.status(404).json({ msg: "User not found" });
         res.status(200).json(user);
     } catch (error) {
@@ -40,7 +41,7 @@ export async function createUserController(req, res) {
 
 export async function loginUserController(req, res) {
     const { userName, password } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     
     if (!userName || !password)
         return res.status(400).json({ msg: "Username and password required" });
@@ -55,7 +56,7 @@ export async function loginUserController(req, res) {
             }
         }
         console.log('e',result.token);
-        res.cookie("token", result.token, {httpOnly: true, sameSite: true});
+        res.cookie("token", result.token);
         res.status(200).json({ msg: "Login successful", user: result });
     } catch (error) {
         res.status(500).json({ error: "Failed to login" });

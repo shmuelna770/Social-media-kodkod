@@ -1,6 +1,4 @@
 import express from "express"
-import {verifyToken} from "../auth/verify.js"
-
 import {
     getAllPosts,
     getPostByIdController,
@@ -13,6 +11,7 @@ import {
     from "../controllers/postControllers.js";
 
     import fileUpload from "express-fileupload";
+import { verifyToken } from "./followsRout.js";
 
 
 export const postsRouter = express.Router();
@@ -20,7 +19,7 @@ export const postsRouter = express.Router();
 
 postsRouter.get("/feed/:id",getFeed);
 postsRouter.get("/", getAllPosts);
-postsRouter.post("/:userId",getPostsByUserIdController)
+postsRouter.get("/:userId",getPostsByUserIdController)
 postsRouter.get("/id/:id", getPostByIdController)
 postsRouter.post("/add/:id",fileUpload() ,createPost);
 postsRouter.delete("/:id", deletePostController);
