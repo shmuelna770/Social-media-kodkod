@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import makeRequest from "../utils/makeRequest";
-
+import "../style/postPage.css";
 type Post = {
   id: string;
   imageUrl: string;
@@ -35,7 +35,6 @@ const { postId } = useParams<{ postId: string }>();
 
   return (
   <main className="post-page">
-    <h1>פוסט של {post.userName || "משתמש"}</h1>
     <img src={post.imageUrl} alt="post" width={400} loading="lazy" />
     {post.description && <p>{post.description}</p>}
     {post.createdAt && <small>פורסם ב־{new Date(post.createdAt).toLocaleString()}</small>}
