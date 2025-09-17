@@ -1,8 +1,8 @@
 import { UserProvider } from "../comps/loginComps/UserContext";
 import Login from "../comps/loginComps/Login";
 import GoogleSignIn from "../comps/loginComps/GoogleSignIn";
-import "../comps/style/LoginPage.css";
-import '../comps/style/LoginPage.css'
+import "../style/LoginPage.css";
+
 import logo from '../assets/x.png';
 import { Link } from "react-router";
 
