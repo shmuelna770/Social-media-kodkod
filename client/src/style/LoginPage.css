@@ -8,7 +8,6 @@
   min-height: 100vh;
   background: #f3f2ef; /* רקע אפור-בהיר */
   font-family: Arial, sans-serif;
-  direction: rtl; /* כי הטקסט בעברית */
   padding: 10px; /* ריווח פנימי למובייל */
   box-sizing: border-box;
 }
