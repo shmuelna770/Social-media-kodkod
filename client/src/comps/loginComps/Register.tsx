@@ -1,57 +1,64 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 import "../../style/Register.css";
+import makeRequest from "../../utils/makeRequest";
 
 export default function Register() {
+  const [file, setFile] = useState<File | undefined>()
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loading, setLoading] = useState<boolean>(false)
   const [message, setMessage] = useState("");
 
   const navigate = useNavigate();
 
+  function handleOnChange(e: FormEvent<HTMLInputElement>) {
+    const target = e.target as HTMLInputElement & {
+      files: FileList
+    }
+    setFile(target.files[0])
+  }
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const newUser = { firstName, lastName, userName, password };
-    console.log("Sending user data to server:", newUser);
+
+    const formData = new FormData();
+    file && formData.set('file', file)
+    formData.set('firstName', firstName)
+    formData.set('lastName', lastName)
+    formData.set('userName', userName)
+    formData.set('password', password)
 
     try {
-      const res = await fetch("http://localhost:3004/user/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUser),
-      });
-
-      const data = await res.json();
-      console.log("Server response:", data);
-
-      if (!res.ok) {
-        console.error("Server error:", data.error);
-        throw new Error(data.error);
-      }
-
-      if (res.ok) {
+      setLoading(true)
+      const res = await makeRequest('/user/add', 'POST', formData, true)
+      setLoading(false)
+      if (res.msg === 'User created') {
         navigate('/Login')
       }
+      else {
+        setMessage(res);
+      }
 
-      setMessage(data.msg);
-    } catch (error) {
-      console.error("Error during submission:", error);
-      setMessage("An error occurred. Please try again.");
+    } catch (error: any) {
+      setMessage(error.message);
     }
   };
 
   return (
     <form className="register-form" onSubmit={handleSubmit}>
+      <input id="file" type="file" accept="image/*" onChange={handleOnChange} />
       <input value={firstName} placeholder="שם פרטי" onChange={(e) => setFirstName(e.target.value)} required />
       <input value={lastName} placeholder="שם משפחה" onChange={(e) => setLastName(e.target.value)} required />
       <input value={userName} placeholder="שם משתמש" onChange={(e) => setUserName(e.target.value)} required />
       <input type="password" value={password} placeholder="סיסמה" onChange={(e) => setPassword(e.target.value)} required />
       <button type="submit">הירשם</button>
 
-      <div className="message">{message}</div>
+      {loading && <p className="loading">Loading...</p>}
+      {message && !loading && <p className="failed">{message}</p>}
     </form>
   );
 }

@@ -48,7 +48,7 @@ export async function updateSinglePost(newData) {
 
     const updatedFields = {};
     if (newData.description) updatedFields.description = newData.description;
-    if (newData.image_url) updatedFields.image_url = newData.image_url;
+    if (newData.imageUrl) updatedFields.imageUrl = newData.imageUrl;
     // console.log('dd',updatedFields);
     
     if (Object.keys(updatedFields).length === 0) return false

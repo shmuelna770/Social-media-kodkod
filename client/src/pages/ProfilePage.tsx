@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router";
 import "../style/profile.css";
 
 export default function ProfilePage() {
-  const { id } = useParams(); // מזהה המשתמש מה-URL
+  const { id } = useParams();
   const [profile, setProfile] = useState({
     userName: "",
     profileImg: "",
@@ -15,7 +15,7 @@ export default function ProfilePage() {
   const [followingCount, setFollowingCount] = useState(0);
   const [isFollowing, setIsFollowing] = useState(false);
 
-  const currentUserId = localStorage.getItem("id"); // מזהה המשתמש הנוכחי
+  const currentUserId = localStorage.getItem("id");
 
   useEffect(() => {
     if (!id) return;
