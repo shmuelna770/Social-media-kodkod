@@ -20,8 +20,8 @@ app.use(cors({
 }))
 
 app.use(express.json());
-app.use('/posts', express.static("public/postImages"))
-app.use('/user', express.static("public/profileImages"))
+app.use(express.static("public/postImages"))
+app.use(express.static("public/profileImages"))
 
 app.use("/posts", postsRouter)
 app.use("/user", userRouter)
