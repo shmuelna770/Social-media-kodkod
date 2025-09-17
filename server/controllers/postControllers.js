@@ -78,6 +78,12 @@ export async function deletePostController(req, res) {
 export async function updatePostController(req, res) {
     const newData = req.body;
     try {
+        if (req.files && req.files.file) {
+            const file = req.files.file;
+            file.name = `${Date.now()}_${file.name}`;
+            await file.mv(path.join("./public/postsImages", file.name));
+            newData.imageUrl = `http://localhost:3004/${file.name}`;
+        }
         const updated = await updateSinglePost(newData);
         if (!updated) return res.status(400).json({ msg: "Post not updated" });
         res.status(200).json({ msg: "Post updated" });
