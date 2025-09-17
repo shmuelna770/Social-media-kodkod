@@ -7,6 +7,7 @@ import HomePage from "./comps/loginComps/HomePage";
 import AddNewPost from "./comps/AddNewPost";
 import Feed from "./pages/Feed";
 import SearchPage from "./comps/Search";
+import Settings from "./comps/Settings";
 
 function App() {
   return (
@@ -16,8 +17,8 @@ function App() {
       <Route path="/feed" element={<HomeFeed />} >
         <Route path="" element={<Feed />} />
         <Route path="add-new-post" element={<AddNewPost />} />
-        <Route path="profile-page" element={<ProfilePage userId="u1" />} />
-        <Route path="settings" element={<div>Settings Page</div>} />
+        <Route path="profile-page/:id" element={<ProfilePage />} />
+        <Route path="settings" element={<Settings />} />
         <Route path="search" element={<SearchPage />} />
       </Route>
       <Route path="/Login" element={<LoginPage />} />

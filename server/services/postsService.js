@@ -10,6 +10,8 @@ export async function getPosts() {
 export async function getPostsByUserId(userId) {
     if (!userId) return false;
     const post = await getDataUserId(userId);
+    // console.log('ccc',post);
+    
     return post || false;
 }
 

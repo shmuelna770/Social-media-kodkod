@@ -1,0 +1,27 @@
+.post-actions {
+  display: flex;
+  justify-content: flex-end; 
+  gap: 12px;
+  padding: 8px 12px;
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #262626;
+  font-size: 14px;
+  transition: transform 0.15s ease;
+}
+
+.icon-btn:hover .icon {
+   color: #ed4956;   
+  transform: scale(1.1);
+}
+
+.icon {
+  vertical-align: middle;
+}
