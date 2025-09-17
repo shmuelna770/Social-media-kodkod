@@ -128,15 +128,15 @@ export default function ProfilePage() {
           <ul className="stats" role="list">
             <li>
               <strong>{posts.length}</strong>
-              <span>פוסטים</span>
+              <span>Posts</span>
             </li>
             <li>
               <strong>{followersCount}</strong>
-              <span>עוקבים</span>
+              <span>Followers</span>
             </li>
             <li>
               <strong>{followingCount}</strong>
-              <span>עוקב/ת</span>
+              <span>Following</span>
             </li>
           </ul>
         </div>
