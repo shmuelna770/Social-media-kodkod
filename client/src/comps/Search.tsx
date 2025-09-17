@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import makeRequest from "../utils/makeRequest";
+import authMakeRequest from "../utils/authMakeRequest";
 import logo from '../../public/logo.png';
 import "../style/SearchPage.css";
 type User = {
@@ -21,7 +21,7 @@ export default function SearchPage() {
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const allUsers: User[] = await makeRequest("/user", "GET");
+                const allUsers: User[] = await authMakeRequest("/user", "GET");
                 setUsers(allUsers);
                 setFilteredUsers(allUsers);
             } catch (error) {

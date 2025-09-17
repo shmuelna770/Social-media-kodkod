@@ -26,10 +26,8 @@ export default function Login() {
       });
 
       const data = await res.json();
-      console.log("Server response:", data);
 
       if (!res.ok) {
-        console.error("Server error:", data.error);
         throw new Error(data.error);
       }
 
@@ -69,6 +67,6 @@ export default function Login() {
       <button type="submit">היכנס</button>
 
       <div className="message">{message}</div>
-    </form>
-  );
+    </form>
+  );
 }
