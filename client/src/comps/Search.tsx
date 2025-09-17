@@ -50,7 +50,7 @@ export default function SearchPage() {
             <div className="search-page">
                 <input
                     type="text"
-                    placeholder="חפש משתמש..."
+                    placeholder="Search users..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     className="search-input"

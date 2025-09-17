@@ -91,7 +91,7 @@ export default function ProfilePage() {
   };
 
   if (error) return <p>{error}</p>;
-  if (!profile) return <p>טוען פרופיל...</p>;
+  if (!profile) return <p>Loading profile...</p>;
 
   return (
     <main className="profile-root" aria-labelledby="profile-heading">
@@ -112,20 +112,20 @@ export default function ProfilePage() {
           </h1>
           <p className="bio">{profile.status || ""}</p>
           <button onClick={handleFollowToggle}>
-            {isFollowing ? "להפסיק לעקוב" : "עקוב"}
+            {isFollowing ? "Stop following" : "Follow"}
           </button>
           <ul className="stats" role="list">
             <li>
               <strong>{posts.length}</strong>
-              <span>פוסטים</span>
+              <span>Posts</span>
             </li>
             <li>
               <strong>{followersCount}</strong>
-              <span>עוקבים</span>
+              <span>Followers</span>
             </li>
             <li>
               <strong>{followingCount}</strong>
-              <span>עוקב/ת</span>
+              <span>Following</span>
             </li>
           </ul>
         </div>

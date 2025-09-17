@@ -12,10 +12,10 @@ function LoginPage() {
             <div className="login-container">
                 <div className="login-box">
                     <img src={logo} alt="KodkodX Logo" />
-                    <h2>כניסה</h2>
+                    <h2>Log In</h2>
                     <Login />
-                    <Link to="/Signup" className="login-link">אין לך חשבון? הירשם כאן</Link>
-                    <h3>או כניסה עם Google</h3>
+                    <Link to="/Signup" className="login-link">Don't have an account? Sign up here</Link>
+                    <h3>or sign in with Google</h3>
                     <div className="google-button">
                         <GoogleSignIn />
                     </div>

@@ -37,13 +37,13 @@ export default function Login() {
         navigate('/feed')
       }
       else {
-        setMessage("שם משתמש או סיסמה שגויים, נסה שוב.");
+        setMessage("Username or password is incorrect, try again.");
       }
       setUser(data.id);
     }
     catch (err: any) {
       console.error("Error during login:", err);
-      setMessage("שגיאה: " + err.message);
+      setMessage("Error: " + err.message);
     }
   };
 
@@ -52,7 +52,7 @@ export default function Login() {
       <input
         value={userName}
         name="username"
-        placeholder="שם משתמש"
+        placeholder="User name"
         onChange={(e) => setUsername(e.target.value)}
         required
       />
@@ -60,11 +60,11 @@ export default function Login() {
         type="password"
         value={password}
         name="password"
-        placeholder="סיסמה"
+        placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <button type="submit">היכנס</button>
+      <button type="submit">Log in</button>
 
       <div className="message">{message}</div>
     </form>

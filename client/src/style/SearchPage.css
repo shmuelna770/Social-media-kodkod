@@ -4,20 +4,14 @@
     padding: 10px;
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
-    /* רקע כללי בהיר */
     min-height: 100vh;
-    direction: rtl;
     box-sizing: border-box;
     padding-bottom: 80px;
-    /* רווח לתחתית למנוע חיתוך עם הפוטר */
     color: #333;
-    /* כתב אפור כהה */
 }
 
-/* קופסה מרכזית */
 .search-box {
     background-color: #ffffff;
-    /* לבן */
     padding: 20px;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
