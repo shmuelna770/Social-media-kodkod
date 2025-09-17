@@ -13,3 +13,13 @@ export type PostProp = {
   description: string;
   sumOfLikes: number;
 };
+
+export type user = {
+  id: number;
+  created_at: string;
+  userName: string;
+  password: string;
+  firstName: string;
+  profileImg?: string;
+  status?: string;
+}
