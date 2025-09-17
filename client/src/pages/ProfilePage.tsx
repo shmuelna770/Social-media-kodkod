@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
-import "../styles/profile.css";
+import "../style/profile.css";
 
 export default function ProfilePage() {
   const { id } = useParams(); // מזהה המשתמש מה-URL
@@ -10,12 +10,14 @@ export default function ProfilePage() {
     status: "",
   });
   type Post = { id: string; imageUrl: string };
-  const [posts, setPosts] = useState<Post[]>([]); // {id, imageUrl}
+  const [posts, setPosts] = useState<Post[]>([]);
   const [followersCount, setFollowersCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   const currentUserId = localStorage.getItem("id"); // מזהה המשתמש הנוכחי
+  const isOwnProfile = currentUserId === id; // האם המשתמש צופה בפרופיל של עצמו?
 
   useEffect(() => {
     if (!id) return;
@@ -46,10 +48,12 @@ export default function ProfilePage() {
         const followingData = await followingRes.json();
         setFollowingCount(followingData.followingCount || 0);
 
-        // בדיקה אם המשתמש הנוכחי עוקב אחרי המשתמש הזה
-        const checkFollowRes = await fetch(`http://localhost:3004/follows/check/${currentUserId}/${id}`);
-        const checkFollowData = await checkFollowRes.json();
-        setIsFollowing(checkFollowData.isFollowing);
+        if (!isOwnProfile) {
+          // בדיקה אם המשתמש הנוכחי עוקב אחרי המשתמש הזה
+          const checkFollowRes = await fetch(`http://localhost:3004/follows/check/${currentUserId}/${id}`);
+          const checkFollowData = await checkFollowRes.json();
+          setIsFollowing(checkFollowData.isFollowing);
+        }
 
       } catch (err) {
         console.error("Error fetching profile data:", err);
@@ -57,14 +61,13 @@ export default function ProfilePage() {
     }
 
     fetchData();
-  }, [id, currentUserId]);
+  }, [id, currentUserId, isOwnProfile]);
 
   const handleFollowToggle = async () => {
     try {
       if (!currentUserId) return;
 
       if (isFollowing) {
-        // מבצע unfollow
         await fetch(`http://localhost:3004/follows`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
@@ -73,7 +76,6 @@ export default function ProfilePage() {
         setIsFollowing(false);
         setFollowersCount((prev) => prev - 1);
       } else {
-        // מבצע follow
         await fetch(`http://localhost:3004/follows`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -85,6 +87,18 @@ export default function ProfilePage() {
     } catch (err) {
       console.error("Error updating follow status:", err);
     }
+  };
+
+  const handleMenuToggle = (postId: string) => {
+    setOpenMenu(openMenu === postId ? null : postId);
+  };
+
+  const handleUpdate = (postId: string) => {
+    alert(`עדכון לפוסט: ${postId}`);
+  };
+
+  const handleDelete = (postId: string) => {
+    alert(`מחיקה של פוסט: ${postId}`);
   };
 
   if (!profile.userName) return <p>טוען פרופיל...</p>;
@@ -103,9 +117,14 @@ export default function ProfilePage() {
         <div className="profile-meta">
           <h1 id="profile-heading" className="name">{profile.userName}</h1>
           <p className="bio">{profile.status}</p>
-          <button onClick={handleFollowToggle}>
-            {isFollowing ? "להפסק לעקוב" : "עקוב"}
-          </button>
+
+          {/* כפתור עקוב/הפסק לעקוב רק אם זה לא הפרופיל של המשתמש עצמו */}
+          {!isOwnProfile && (
+            <button onClick={handleFollowToggle}>
+              {isFollowing ? "הפסק לעקוב" : "עקוב"}
+            </button>
+          )}
+
           <ul className="stats" role="list">
             <li>
               <strong>{posts.length}</strong>
@@ -129,6 +148,21 @@ export default function ProfilePage() {
             <Link to={`/post/${post.id}`}>
               <img src={post.imageUrl} alt="" loading="lazy" />
             </Link>
+
+            {/* בורגר רק אם זה הפרופיל של המשתמש עצמו */}
+            {isOwnProfile && (
+              <>
+                <button className="burger-btn" onClick={() => handleMenuToggle(post.id)}>
+                  ⋮
+                </button>
+                {openMenu === post.id && (
+                  <div className="post-menu">
+                    <button onClick={() => handleUpdate(post.id)}>✏️ עדכון</button>
+                    <button onClick={() => handleDelete(post.id)}>🗑️ מחיקה</button>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         ))}
       </section>
