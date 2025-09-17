@@ -49,7 +49,7 @@
 }
 
 .add-post-container textarea:focus {
-  border-color: #0095f6;
+  border-color: #000000;
 }
 
 
@@ -65,9 +65,9 @@
 
 
 .add-post-container button {
-  background: #0095f6;
+  background: #000000;
   color: white;
-  border: none;
+  border: 1px solid black;
   padding: 12px 24px;
   border-radius: 8px;
   font-weight: 600;
@@ -80,7 +80,9 @@
 }
 
 .add-post-container button:hover {
-  background: #007acc;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid black;
   transform: translateY(-1px);
 }
 
