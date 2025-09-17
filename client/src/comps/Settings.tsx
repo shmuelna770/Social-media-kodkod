@@ -5,17 +5,18 @@ export default function Settings() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("user"); 
-    navigate("/Login"); 
+    localStorage.clear();
+    navigate("/login");
   };
+
 
   return (
     <div className="settings-container">
-        <div className="settings-menu">
-          <button className="logout-button" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
+      <div className="settings-menu">
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 }
