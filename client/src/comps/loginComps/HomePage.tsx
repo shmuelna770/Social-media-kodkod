@@ -2,7 +2,6 @@ import { Link, useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import '../../style/HomePage.css';
 import logo from '../../assets/x.png';
-import log from '../../../public/logo.png';
 
 const HomePage: React.FC = () => {
     const navigate = useNavigate();
@@ -25,7 +24,7 @@ const HomePage: React.FC = () => {
         <div className="home-container">
             <div className="home-box">
                 <img src={logo} alt="KodkodX Logo" className="home-logo" />
-                <img src={log} alt="KodkodX Logo Rotated" className="logo-rotated" />
+                <img src={"/logo.png"} alt="KodkodX Logo Rotated" className="logo-rotated" />
 
                 <h1 className="home-title">Welcome to KodkodX</h1>
                 <h2 className="home-subtitle">Your social platform</h2>
