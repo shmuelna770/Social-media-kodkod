@@ -9,7 +9,7 @@ type Props = {
 
 export default function PostHeader({ username, profileImg,userId }: Props) {
   if (!profileImg){
-    profileImg = '../../public/logo.png'
+    profileImg = '/logo.png'
   }
   return (
     <div className="postHeader">

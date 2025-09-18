@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import authMakeRequest from "../utils/authMakeRequest";
-import logo from '../../public/logo.png';
 import "../style/SearchPage.css";
 type User = {
     id: number;
@@ -61,7 +60,7 @@ export default function SearchPage() {
                             <Link to={`/feed/profile-page/${user.id}`} className="user-link"
 >
                                 <img
-                                    src={user.profileImg || logo}
+                                    src={user.profileImg || "/logo.png"}
                                     alt={user.userName}
                                     className="profile-img"
                                 />
