@@ -1,4 +1,4 @@
-import { FaRegHeart, FaRegComment } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaRegComment } from "react-icons/fa";
 import "../style/postActions.css";
 
 type Props = {
@@ -6,6 +6,7 @@ type Props = {
   commentsCount: number;
   onLike: () => void;
   onToggleComments: () => void;
+  isLiked: boolean;
 };
 
 export default function PostActions({
@@ -13,11 +14,16 @@ export default function PostActions({
   commentsCount,
   onLike,
   onToggleComments,
+  isLiked,
 }: Props) {
   return (
     <div className="post-actions">
       <button className="icon-btn" onClick={onLike}>
-        <FaRegHeart className="icon" size={20} />
+        {isLiked ? (
+          <FaHeart className="icon liked" size={20} color="red" />
+        ) : (
+          <FaRegHeart className="icon" size={20} />
+        )}
         <span>{likeCount}</span>
       </button>
       <button className="icon-btn" onClick={onToggleComments}>

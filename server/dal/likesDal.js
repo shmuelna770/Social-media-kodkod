@@ -25,3 +25,12 @@ export async function deleteLike(userId, postId) {
     .eq("userId", userId)
     .eq("postId", postId);
 }
+
+export async function findLike(userId, postId) {
+  return await supabase
+    .from("likes")
+    .select("*")
+    .eq("userId", userId)
+    .eq("postId", postId)
+    .maybeSingle();
+}
