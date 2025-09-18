@@ -4,7 +4,8 @@ import {
     getFollowers,
     getFollowing,
     getFollowersCount,
-    getFollowingCount
+    getFollowingCount,
+    checkFollowDal
 } from "../dal/followsDAL.js";
 
 // עוקב אחרי משתמש
@@ -36,4 +37,11 @@ export async function countFollowers(userId) {
 // מחזיר את מספר הנעקבים של המשתמש
 export async function countFollowing(userId) {    
     return await getFollowingCount(userId);
+}
+
+
+
+export async function checkFollowService(followerId , followingId) {
+  const isFollowing = await checkFollowDal(followerId, followingId);  
+  return { isFollowing };
 }

@@ -49,3 +49,17 @@ export async function getFollowingCount(userId) {
         .eq("followerId", userId);
     return count;
 }
+
+
+export async function checkFollowDal(followerId, followingId) {
+  const { data, error } = await supabase
+    .from("followers")
+    .select("id") 
+    .eq("followerId", followerId)
+    .eq("followingId", followingId)
+    .limit(1);
+
+  if (error) throw error;
+
+  return data.length > 0;
+}

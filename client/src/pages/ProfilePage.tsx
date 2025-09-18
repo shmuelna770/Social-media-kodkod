@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import "../style/profile.css";
+import makeRequest from "../utils/makeRequest";
 
 export default function ProfilePage() {
   const { id } = useParams(); 
@@ -16,39 +17,39 @@ export default function ProfilePage() {
   const [isFollowing, setIsFollowing] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
-  const currentUserId = localStorage.getItem("id"); 
-  const isOwnProfile = currentUserId === id; 
+  const currentUserId = localStorage.getItem("id"); // מזהה המשתמש הנוכחי
+  const isOwnProfile = currentUserId === id;
+
   useEffect(() => {
     if (!id) return;
 
     async function fetchData() {
       try {
-        const profileRes = await fetch(`http://localhost:3004/user/${id}`);
-        const profileData = await profileRes.json();
+        // פרטי המשתמש
+        const profileData = await makeRequest(`/user/${id}`);
         setProfile({
           userName: profileData.userName,
           profileImg: profileData.profileImg,
           status: profileData.status || "",
         });
 
-        const postsRes = await fetch(`http://localhost:3004/posts/${id}`);
-        const postsData = await postsRes.json();
+        // הפוסטים של המשתמש
+        const postsData = await makeRequest(`/posts/${id}`);
         setPosts(postsData.map((p: { id: string; imageUrl: string }) => ({ id: p.id, imageUrl: p.imageUrl })));
 
-        const followersRes = await fetch(`http://localhost:3004/follows/followers/count/${id}`);
-        const followersData = await followersRes.json();
+        // מספר עוקבים
+        const followersData = await makeRequest(`/follows/followers/count/${id}`);
         setFollowersCount(followersData.followersCount || 0);
 
-        const followingRes = await fetch(`http://localhost:3004/follows/following/count/${id}`);
-        const followingData = await followingRes.json();
+        // מספר נעקבים
+        const followingData = await makeRequest(`/follows/following/count/${id}`);
         setFollowingCount(followingData.followingCount || 0);
 
         if (!isOwnProfile) {
-          const checkFollowRes = await fetch(`http://localhost:3004/follows/check/${currentUserId}/${id}`);
-          const checkFollowData = await checkFollowRes.json();
+          // בדיקה אם המשתמש הנוכחי עוקב אחרי המשתמש הזה
+          const checkFollowData = await makeRequest(`/follows/check/${currentUserId}/${id}`);
           setIsFollowing(checkFollowData.isFollowing);
         }
-
       } catch (err) {
         console.error("Error fetching profile data:", err);
       }
@@ -62,19 +63,11 @@ export default function ProfilePage() {
       if (!currentUserId) return;
 
       if (isFollowing) {
-        await fetch(`http://localhost:3004/follows`, {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ followerId: currentUserId, followingId: id }),
-        });
+        await makeRequest(`/follows`, "DELETE", { followerId: currentUserId, followingId: id });
         setIsFollowing(false);
         setFollowersCount((prev) => prev - 1);
       } else {
-        await fetch(`http://localhost:3004/follows`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ followerId: currentUserId, followingId: id }),
-        });
+        await makeRequest(`/follows`, "POST", { followerId: currentUserId, followingId: id });
         setIsFollowing(true);
         setFollowersCount((prev) => prev + 1);
       }
@@ -88,14 +81,27 @@ export default function ProfilePage() {
   };
 
   const handleUpdate = (postId: string) => {
-    alert(`עדכון לפוסט: ${postId}`);
+    alert(`Update to the post: ${postId}`);
   };
 
-  const handleDelete = (postId: string) => {
-    alert(`מחיקה של פוסט: ${postId}`);
+  const handleDelete = async (postId: string) => {
+    const confirmed = window.confirm("Are you sure you want to delete the post?");
+    if (!confirmed) return;
+
+    try {
+      const res = await makeRequest(`/posts/${postId}`, "DELETE", { userId: currentUserId });
+      if (res.error) throw new Error(res.error);
+
+      // הסרת הפוסט מהסטייט כדי לעדכן את המסך
+      setPosts((prevPosts) => prevPosts.filter((p) => p.id !== postId));
+      alert("The post was successfully deleted!");
+    } catch (err: any) {
+      console.error("Error deleting post:", err);
+      alert("Error deleting post: " + err.message);
+    }
   };
 
-  if (!profile.userName) return <p>Loading profile...</p>;
+  if (!profile.userName) return <p>Loads profile...</p>;
 
   return (
     <main className="profile-root" aria-labelledby="profile-heading">
@@ -114,7 +120,7 @@ export default function ProfilePage() {
 
           {!isOwnProfile && (
             <button onClick={handleFollowToggle}>
-              {isFollowing ? "Unfollow" : "Follow"}
+              {isFollowing ? "unfollow" : "follow"}
             </button>
           )}
 
@@ -135,7 +141,7 @@ export default function ProfilePage() {
         </div>
       </header>
 
-      <section className="posts-grid">
+    <section className="posts-grid">
   {posts.length === 0 ? (
     <p className="no-posts">No posts</p>
   ) : (
@@ -162,7 +168,6 @@ export default function ProfilePage() {
     ))
   )}
 </section>
-
     </main>
   );
 }

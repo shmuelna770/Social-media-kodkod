@@ -4,7 +4,8 @@ import {
     listFollowers,
     listFollowing,
     countFollowers,
-    countFollowing
+    countFollowing,
+    checkFollowService
 } from "../services/followsService.js";
 
 
@@ -56,4 +57,19 @@ export async function getFollowingCountController(req, res) {
     const { userId } = req.params;
     const count = await countFollowing(userId);    
     res.json({ followingCount: count });
+}
+
+
+export async function checkFollowController(req, res) {
+  try {
+    const { followerId, followingId } = req.params;
+    console.log('s',req.params);
+    if (!followerId || !followingId) {
+      return res.status(400).json({ error: "Missing followerId or followingId" });
+    }
+    const result = await checkFollowService(followerId, followingId);    
+    return res.json(result);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
 }

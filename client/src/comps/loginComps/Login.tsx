@@ -14,7 +14,7 @@ export default function Login() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const userCredentials = { userName: userName, password: password };
-    console.log("Sending login data to server:", userCredentials);
+    // console.log("Sending login data to server:", userCredentials);
 
     try {
       const res = await fetch("http://localhost:3004/user/login", {
