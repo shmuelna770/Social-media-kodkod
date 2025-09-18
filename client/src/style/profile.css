@@ -16,10 +16,13 @@
   padding: 20px 0;
   border-bottom: 1px solid #dbdbdb;
 }
-
 .avatar {
-  width: clamp(100px, 20%, 180px); 
-  height: clamp(100px, 20%, 180px);
+  width: 20vw;   /* תמיד יחסית לרוחב המסך */
+  height: 20vw;  /* חייב להיות זהה ל-width */
+  max-width: 180px;
+  max-height: 180px;
+  min-width: 100px;
+  min-height: 100px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #dbdbdb;
