@@ -21,7 +21,7 @@ export default function Post(post: PostProp) {
       setLoading(true)
       const res = await authMakeRequest(`/user/${post.userId}`)
       setLoading(false)
-      console.log(res);
+      // console.log(res);
 
       if (!res) {
         setMessage("User not found")

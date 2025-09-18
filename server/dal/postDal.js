@@ -21,7 +21,7 @@ export async function getDataUserId(userId) {
         .from("posts")
         .select("*")
         .eq("userId", userId)
-        
+
     if (error) {
         console.error("Error fetching post by userName:", error);
         return null;
@@ -57,16 +57,18 @@ export async function writeData(newPost) {
 }
 
 // מחיקת פוסט
-export async function deleteData(id) {
+export async function deleteData(id, userId) {
     const { data, error } = await supabase
         .from("posts")
         .delete()
-        .eq("id", id);
+        .eq("id", id)
+        .eq("userId", userId);
+
     if (error) {
         console.error("Error deleting post:", error);
-        return null;
+        return { success: false, error };
     }
-    return data;
+    return { success: true };
 }
 
 // עדכון פוסט
@@ -84,25 +86,25 @@ export async function updateData(id, updatedFields) {
 }
 
 
-    export async function getPostsOfFollowing(userId) {
-        const { data: following, error: followError } = await supabase
-            .from("followers")
-            .select("followingId")
-            .eq("followerId", userId);
-        console.log('w',following);
-        
-        if (followError) throw followError;
-        if (!following || following.length === 0) return [];
+export async function getPostsOfFollowing(userId) {
+    const { data: following, error: followError } = await supabase
+        .from("followers")
+        .select("followingId")
+        .eq("followerId", userId);
+    // console.log('w',following);
 
-        const followingIds = following.map(f => f.followingId);
+    if (followError) throw followError;
+    if (!following || following.length === 0) return [];
 
-        const { data: posts, error: postsError } = await supabase
-            .from("posts")
-            .select("*")
-            .in("userId", followingIds)
-            .order("created_at", { ascending: false });
+    const followingIds = following.map(f => f.followingId);
 
-        if (postsError) throw postsError;
+    const { data: posts, error: postsError } = await supabase
+        .from("posts")
+        .select("*")
+        .in("userId", followingIds)
+        .order("created_at", { ascending: false });
 
-        return posts;
-    }
+    if (postsError) throw postsError;
+
+    return posts;
+}
