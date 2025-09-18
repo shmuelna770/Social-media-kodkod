@@ -4,7 +4,7 @@ import { Link } from "react-router";
 type Props = {
   username: string;
   profileImg: string;
-  userId:number
+  userId?:number
 };
 
 export default function PostHeader({ username, profileImg,userId }: Props) {

@@ -67,14 +67,17 @@ export async function createPost(req, res) {
 
 
 export async function deletePostController(req, res) {
-    const id = parseInt(req.params.id);
-    try {
-        const deleted = await deletePost(id);
-        if (!deleted) return res.status(404).json({ msg: "Post not exist" });
-        res.status(200).json({ msg: "Post deleted", post: deleted });
-    } catch (error) {
-        res.status(500).json({ error: "Failed to delete post" });
+  const id = parseInt(req.params.id);
+  const userId = parseInt(req.body.userId);   
+  try {
+    const result = await deletePost(id, userId);
+    if (!result.success) {
+      return res.status(500).json({ error: "Failed to delete post" });
     }
+    return res.status(200).json({ msg: "Post deleted successfully" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 }
 
 export async function updatePostController(req, res) {
