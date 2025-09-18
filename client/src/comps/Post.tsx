@@ -35,7 +35,7 @@ export default function Post(post: PostProp) {
 
   return (
     <div>
-      <PostHeader username={userPost?.userName || 'unknown'} profileImg={userPost?.profileImg || ''} />
+      <PostHeader username={userPost?.userName || 'unknown'} profileImg={userPost?.profileImg || ''} userId={userPost?.id ?? 0} />
       <PostImage postImg={post.imageUrl} />
       <PostActions
         commentsCount={0}

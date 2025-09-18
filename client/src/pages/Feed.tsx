@@ -1,20 +1,23 @@
 import Post from "../comps/Post";
-
+import { useNavigate } from "react-router";
 import type { PostProp } from "../types/types";
 import "../index.css"
 import { useEffect, useState } from "react";
 import authMakeRequest from "../utils/authMakeRequest";
 
 const Feed = () => {
+    const navigate = useNavigate()
     const [posts, setPosts] = useState<PostProp[]>([]);
     const [message, setMessage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false)
+    
 
     useEffect(() => {
         const fetchFeed = async () => {
             const userId = localStorage.getItem('id');
             if (!userId) {
                 setMessage(`User not found`)
+                navigate("/login")
                 return
             }
             setLoading(true)

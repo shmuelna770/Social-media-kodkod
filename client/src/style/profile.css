@@ -149,3 +149,10 @@
     font-size: clamp(11px, 4vw, 13px);
   }
 }
+.no-posts {
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555;
+}
