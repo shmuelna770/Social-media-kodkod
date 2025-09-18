@@ -7,7 +7,6 @@ import { createUserController, loginUserController, getUserController, getUsersC
 
 userRouter.get("/", getUsersController)
 userRouter.get("/:id", getUserController)
-userRouter.post("/add", createUserController);
 userRouter.get("/", getUsersController)
 userRouter.get("/:id", getUserController)
 userRouter.post("/add", fileUpload(), createUserController);

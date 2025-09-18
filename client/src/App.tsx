@@ -19,7 +19,6 @@ function App() {
         <Route path="profile-page/:id" element={<ProfilePage />} />
         <Route path="search" element={<SearchPage />} />
         <Route path="post/:postId" element={<PostPage />} />
- 
       </Route>
       <Route path="/Login" element={<LoginPage />} />
     </Routes>
