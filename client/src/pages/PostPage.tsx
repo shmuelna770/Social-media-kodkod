@@ -30,15 +30,15 @@ const { postId } = useParams<{ postId: string }>();
     fetchPost();
   }, [postId]);
 
-  if (error) return <p>שגיאה: {error}</p>;
-  if (!post) return <p>טוען פוסט...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!post) return <p>Loading post...</p>;
 
   return (
   <main className="post-page">
-    <h1>פוסט של {post.userName || "משתמש"}</h1>
+    <h1>Post by {post.userName || "User"}</h1>
     <img src={post.imageUrl} alt="post" width={400} loading="lazy" />
     {post.description && <p>{post.description}</p>}
-    {post.createdAt && <small>פורסם ב־{new Date(post.createdAt).toLocaleString()}</small>}
+    {post.createdAt && <small>Published on {new Date(post.createdAt).toLocaleString()}</small>}
   </main>
 );
 

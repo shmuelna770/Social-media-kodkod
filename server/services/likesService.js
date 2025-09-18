@@ -1,4 +1,4 @@
-import { getLike, insertLike, deleteLike } from "../dal/likesDal.js";
+import { getLike, insertLike, deleteLike, findLike } from "../dal/likesDal.js";
 
 export async function addLikeService(userId, postId) {
   try {
@@ -40,4 +40,14 @@ export async function removeLikeService(userId, postId) {
   } catch (err) {
     return { success: false, message: err.message };
   }
+}
+
+export async function checkIfUserLiked(userId, postId) {
+  const { data, error } = await findLike(userId, postId);
+
+  if (error) {
+    throw error;
+  }
+
+  return !!data;
 }

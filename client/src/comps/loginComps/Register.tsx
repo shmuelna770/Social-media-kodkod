@@ -9,6 +9,7 @@ export default function Register() {
   const [lastName, setLastName] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [status, setStatus] = useState("");
 
   const [loading, setLoading] = useState<boolean>(false)
   const [message, setMessage] = useState("");
@@ -33,13 +34,15 @@ export default function Register() {
       formData.set('lastName', lastName)
       formData.set('userName', userName)
       formData.set('password', password)
+      formData.set('status', status)
     }
     else {
       formData = {
         firstName,
         lastName,
         userName,
-        password
+        password,
+        status
       }
     }
     
@@ -62,12 +65,13 @@ export default function Register() {
 
   return (
     <form className="register-form" onSubmit={handleSubmit}>
-      <input id="file" type="file" accept="image/*" onChange={handleOnChange} />
-      <input value={firstName} placeholder="שם פרטי" onChange={(e) => setFirstName(e.target.value)} required />
-      <input value={lastName} placeholder="שם משפחה" onChange={(e) => setLastName(e.target.value)} required />
-      <input value={userName} placeholder="שם משתמש" onChange={(e) => setUserName(e.target.value)} required />
-      <input type="password" value={password} placeholder="סיסמה" onChange={(e) => setPassword(e.target.value)} required />
-      <button type="submit">הירשם</button>
+      <input value={firstName} placeholder="First Name" onChange={(e) => setFirstName(e.target.value)} required />
+      <input value={lastName} placeholder="Last Name" onChange={(e) => setLastName(e.target.value)} required />
+      <input value={userName} placeholder="User Name" onChange={(e) => setUserName(e.target.value)} required />
+      <input type="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)} required />
+      <input value={status} placeholder="Status" onChange={(e) => setStatus(e.target.value)} />
+      <input id="file" type="file" accept="image/*"  onChange={handleOnChange} />
+      <button type="submit">Sign Up</button>
 
       {loading && <p className="loading">Loading...</p>}
       {message && !loading && <p className="failed">{message}</p>}

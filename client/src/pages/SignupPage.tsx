@@ -10,10 +10,10 @@ function SignupPage() {
             <div className="login-container">
                 <div className="login-box">
                     <img src={logo} alt="KodkodX Logo" />
-                    <h2>הרשמה</h2>
+                    <h2>Sign Up</h2>
                     <Register />
-                    <Link to="/Login" className="login-link">כבר יש לך חשבון? התחבר כאן</Link>
-                    <h3>או כניסה עם Google</h3>
+                    <Link to="/Login" className="login-link">Already have an account? Log in here</Link>
+                    <h3>or sign in with Google</h3>
                     <div className="google-button">
                         <GoogleSignIn />
                     </div>
