@@ -33,12 +33,8 @@ export async function writeNewPost(newPost) {
 }
 
 //מחיקת פוסט
-export async function deletePost(idString) {
-    const id = parseInt(idString);
-    if (!id) return false;
-
-    const deleted = await deleteData(id);
-    return deleted ? true : false;
+export async function deletePost(id, userId) {
+  return await deleteData(id, userId);
 }
 
 // עדכון פוסט
@@ -56,6 +52,7 @@ export async function updateSinglePost(newData) {
     const updated = await updateData(id, updatedFields);
     return updated ? true : false;
 }
+
 
 export async function getUserFeed(userId) {
     return await getPostsOfFollowing(userId);
