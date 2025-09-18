@@ -11,7 +11,7 @@ import {
 // עוקב אחרי משתמש אחר
 export async function follow(req, res) {
     const { followerId, followingId } = req.body;
-    console.log("follows",followerId,followingId);
+    // console.log("follows",followerId,followingId);
     
     const result = await followUser(followerId, followingId);
     if (result.error) return res.status(400).json(result);

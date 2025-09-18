@@ -17,7 +17,7 @@ const HomePage: React.FC = () => {
                 }
             }
         } catch (e) {
-            console.error("שגיאה בקריאת user מה־localStorage", e);
+            console.error("Error reading user from localStorage", e);
         }
     }, [navigate]);
 
@@ -27,12 +27,12 @@ const HomePage: React.FC = () => {
                 <img src={logo} alt="KodkodX Logo" className="home-logo" />
                 <img src={log} alt="KodkodX Logo Rotated" className="logo-rotated" />
 
-                <h1 className="home-title">ברוכים הבאים ל KodkodX</h1>
-                <h2 className="home-subtitle">הפלטפורמה החברתית שלך</h2>
-                <p className="home-subtitle">התחבר או הירשם כדי להתחיל</p>
+                <h1 className="home-title">Welcome to KodkodX</h1>
+                <h2 className="home-subtitle">Your social platform</h2>
+                <p className="home-subtitle">Log in or sign up to get started</p>
 
-                <Link to="/Login" className="home-link">התחבר</Link>
-                <Link to="/Signup" className="home-link">הרשמה</Link>
+                <Link to="/Login" className="home-link">Log in</Link>
+                <Link to="/Signup" className="home-link">Sign up</Link>
             </div>
         </div>
     );

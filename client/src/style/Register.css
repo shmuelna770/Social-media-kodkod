@@ -106,3 +106,34 @@ h2 {
     font-size: 20px;
   }
 }
+
+/* שדה העלאת קובץ */
+.register-form input[type="file"] {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #fff;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.register-form input[type="file"]:focus {
+  outline: none;
+  border-color: #0077b5;
+  box-shadow: 0 0 4px rgba(0, 119, 181, 0.3);
+}
+
+/* הסתרת כפתור ברירת המחדל ועיצוב מותאם */
+.register-form input[type="file"]::-webkit-file-upload-button {
+  background: #fff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+
