@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router";
 import "../style/profile.css";
 
 export default function ProfilePage() {
-  const { id } = useParams(); // מזהה המשתמש מה-URL
+  const { id } = useParams(); 
   const [profile, setProfile] = useState({
     userName: "",
     profileImg: "",
@@ -16,15 +16,13 @@ export default function ProfilePage() {
   const [isFollowing, setIsFollowing] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
-  const currentUserId = localStorage.getItem("id"); // מזהה המשתמש הנוכחי
-  const isOwnProfile = currentUserId === id; // האם המשתמש צופה בפרופיל של עצמו?
-
+  const currentUserId = localStorage.getItem("id"); 
+  const isOwnProfile = currentUserId === id; 
   useEffect(() => {
     if (!id) return;
 
     async function fetchData() {
       try {
-        // פרטי המשתמש
         const profileRes = await fetch(`http://localhost:3004/user/${id}`);
         const profileData = await profileRes.json();
         setProfile({
@@ -33,23 +31,19 @@ export default function ProfilePage() {
           status: profileData.status || "",
         });
 
-        // הפוסטים של המשתמש
         const postsRes = await fetch(`http://localhost:3004/posts/${id}`);
         const postsData = await postsRes.json();
         setPosts(postsData.map((p: { id: string; imageUrl: string }) => ({ id: p.id, imageUrl: p.imageUrl })));
 
-        // מספר עוקבים
         const followersRes = await fetch(`http://localhost:3004/follows/followers/count/${id}`);
         const followersData = await followersRes.json();
         setFollowersCount(followersData.followersCount || 0);
 
-        // מספר נעקבים
         const followingRes = await fetch(`http://localhost:3004/follows/following/count/${id}`);
         const followingData = await followingRes.json();
         setFollowingCount(followingData.followingCount || 0);
 
         if (!isOwnProfile) {
-          // בדיקה אם המשתמש הנוכחי עוקב אחרי המשתמש הזה
           const checkFollowRes = await fetch(`http://localhost:3004/follows/check/${currentUserId}/${id}`);
           const checkFollowData = await checkFollowRes.json();
           setIsFollowing(checkFollowData.isFollowing);
@@ -101,14 +95,14 @@ export default function ProfilePage() {
     alert(`מחיקה של פוסט: ${postId}`);
   };
 
-  if (!profile.userName) return <p>טוען פרופיל...</p>;
+  if (!profile.userName) return <p>Loading profile...</p>;
 
   return (
     <main className="profile-root" aria-labelledby="profile-heading">
       <header className="profile-header">
         <img
           className="avatar"
-          src={profile.profileImg}
+          src={profile.profileImg || "/logo.png"}
           alt={`${profile.userName} avatar`}
           width={120}
           height={120}
@@ -118,10 +112,9 @@ export default function ProfilePage() {
           <h1 id="profile-heading" className="name">{profile.userName}</h1>
           <p className="bio">{profile.status}</p>
 
-          {/* כפתור עקוב/הפסק לעקוב רק אם זה לא הפרופיל של המשתמש עצמו */}
           {!isOwnProfile && (
             <button onClick={handleFollowToggle}>
-              {isFollowing ? "הפסק לעקוב" : "עקוב"}
+              {isFollowing ? "Unfollow" : "Follow"}
             </button>
           )}
 
@@ -144,7 +137,7 @@ export default function ProfilePage() {
 
       <section className="posts-grid">
   {posts.length === 0 ? (
-    <p className="no-posts">אין פוסטים</p>
+    <p className="no-posts">No posts</p>
   ) : (
     posts.map((post) => (
       <div key={post.id} className="post">
@@ -152,7 +145,6 @@ export default function ProfilePage() {
           <img src={post.imageUrl} alt="" loading="lazy" />
         </Link>
 
-        {/* בורגר רק אם זה הפרופיל של המשתמש עצמו */}
         {isOwnProfile && (
           <>
             <button className="burger-btn" onClick={() => handleMenuToggle(post.id)}>
@@ -160,8 +152,8 @@ export default function ProfilePage() {
             </button>
             {openMenu === post.id && (
               <div className="post-menu">
-                <button onClick={() => handleUpdate(post.id)}>✏️ עדכון</button>
-                <button onClick={() => handleDelete(post.id)}>🗑️ מחיקה</button>
+                <button onClick={() => handleUpdate(post.id)}>✏️ updating</button>
+                <button onClick={() => handleDelete(post.id)}>🗑️ deleting</button>
               </div>
             )}
           </>

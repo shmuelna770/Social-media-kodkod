@@ -21,7 +21,7 @@ const { postId } = useParams<{ postId: string }>();
     async function fetchPost() {
     const data = await makeRequest(`/posts/id/${postId}`);
       if (typeof data === "string") {
-        setError(data); // במקרה שחזר טקסט של שגיאה
+        setError(data); 
       } else {
         setPost(data);
       }
