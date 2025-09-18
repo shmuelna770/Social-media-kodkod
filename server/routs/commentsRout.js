@@ -1,5 +1,4 @@
 import express from "express"
-export {verifyToken} from "../auth/verify.js"
 
 import {postComment,getComments} from "../controllers/commentsController.js"
 

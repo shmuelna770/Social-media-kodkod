@@ -1,6 +1,4 @@
-import express from "express"
-export {verifyToken} from "../auth/verify.js"
-
+import express from "express";
 import {
     getFollowersCountController,
     getFollowingCountController,

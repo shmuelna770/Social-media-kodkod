@@ -10,7 +10,7 @@ const Feed = () => {
     const [posts, setPosts] = useState<PostProp[]>([]);
     const [message, setMessage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false)
-    
+
 
     useEffect(() => {
         const fetchFeed = async () => {
@@ -21,16 +21,21 @@ const Feed = () => {
                 return
             }
             setLoading(true)
-            const allPosts = await authMakeRequest(`/posts/feed/${userId}`, 'GET')
-            if (!allPosts || allPosts.length === 0) {
+            const res = await authMakeRequest(`/posts/feed/${userId}`, 'GET')
+            setLoading(false)
+            console.log(res)
+            if (!res || res.length === 0) {
                 setMessage("Start follow to show posts")
             }
-            setLoading(false)
-            if (!allPosts) {
-                setMessage(allPosts)
+            if (res.error) {
+                setMessage(res.error)
                 return
             }
-            setPosts(allPosts)
+            if (!res) {
+                setMessage(res)
+                return
+            }
+            setPosts(res)
 
         }
         fetchFeed()

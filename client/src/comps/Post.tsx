@@ -71,6 +71,7 @@ export default function Post(post: PostProp) {
       <PostHeader
         username={userPost?.userName || "unknown"}
         profileImg={userPost?.profileImg || ""}
+        userId={userPost?.id}
       />
       <PostImage postImg={post.imageUrl} />
       <PostActions

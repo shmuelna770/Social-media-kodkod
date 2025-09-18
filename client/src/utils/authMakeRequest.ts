@@ -1,9 +1,5 @@
 export default async function authMakeRequest(url: string, method: string = 'GET', body: any = null, isFile: boolean = false) {
-    const token = localStorage.getItem("token")
-    if (!token) {
-        alert("you need to login first")
-    }
-
+    const token = localStorage.getItem("token") 
 
     const SERVER_URL = "http://localhost:3004"
     try {
@@ -33,14 +29,6 @@ export default async function authMakeRequest(url: string, method: string = 'GET
             await new Promise(resolve => setTimeout(resolve, 500))
 
             res = await fetch(`${SERVER_URL}${url}`, options);
-        }
-
-        if (res.status === 401) {
-            return ('Token expired of invalid. Please login again.');
-        }
-        if (!res.ok) {
-            const errText = await res.text();
-            return (errText);
         }
 
         const contentType = res.headers.get('Content-Type');
