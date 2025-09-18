@@ -124,6 +124,45 @@ npm run dev
 ```
 האפליקציה תפעל על פורט 5173.
 
+## 🚀 פריסה ל-Render (Deployment)
+
+### הגדרות פריסה
+
+הפרויקט מוכן לפריסה ב-Render עם הקובץ `render.yaml` הכלול בפרויקט.
+
+#### שלבי פריסה:
+
+1. **חבר את הפרויקט ל-Render**:
+   - עלה את הפרויקט ל-GitHub
+   - צור שירות חדש ב-Render
+   - בחר את הרפוזיטורי שלך
+
+2. **הגדר משתני סביבה ב-Render**:
+   ```
+   NODE_ENV=production
+   DB_URL_SUPERBASE=your_supabase_url
+   DB_PUBLIC_KEY=your_supabase_anon_key
+   JWT_SECRET=your_jwt_secret_key
+   FRONTEND_URL=https://your-app-name.onrender.com
+   ```
+
+3. **פרטי פריסה**:
+   - Build Command: `cd client && npm install && npm run build`
+   - Start Command: `cd server && NODE_ENV=production npm start`
+   - Environment: Node
+   - Region: Oregon (US West) או קרוב לאזור שלכם
+
+4. **לאחר פריסה**:
+   - Render יבנה את הפרויקט אוטומטית
+   - האפליקציה תהיה זמינה בכתובת שתוקצה לכם
+   - השרת ישרת גם את ה-API וגם את הקליינט
+
+### בעיות נפוצות בפריסה:
+
+- **CORS Error**: וודא שהגדרת נכון את `FRONTEND_URL` במשתני הסביבה
+- **Database Connection**: בדוק את פרטי החיבור ל-Supabase
+- **Build Errors**: וודא שכל התלותים מותקנות נכון
+
 ## 🗄️ מבנה בסיס הנתונים
 
 ### טבלאות נדרשות ב-Supabase:

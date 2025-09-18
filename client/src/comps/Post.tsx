@@ -15,17 +15,14 @@ export default function Post(post: PostProp) {
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [showComments, setShowComments] = useState(false);
-  const [closing, setClosing] = useState(false);
 
   const userId = localStorage.getItem("id");
 
   function openComments() {
     setShowComments(true);
-    setClosing(false);
   }
 
   function closeComments() {
-    setClosing(true);
     setTimeout(() => setShowComments(false), 300);
   }
 

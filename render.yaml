@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: social-media-kodkod
+    env: node
+    plan: free
+    buildCommand: |
+      # Install server dependencies
+      cd server && npm install &&
+      # Install client dependencies and build
+      cd ../client && npm install && npm run build
+    startCommand: cd server && NODE_ENV=production npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_URL_SUPERBASE
+        sync: false
+      - key: DB_PUBLIC_KEY
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
