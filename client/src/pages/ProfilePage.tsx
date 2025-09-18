@@ -108,7 +108,7 @@ export default function ProfilePage() {
       <header className="profile-header">
         <img
           className="avatar"
-          src={profile.profileImg}
+          src={profile.profileImg || "/logo.png"}
           alt={`${profile.userName} avatar`}
           width={120}
           height={120}
@@ -118,7 +118,6 @@ export default function ProfilePage() {
           <h1 id="profile-heading" className="name">{profile.userName}</h1>
           <p className="bio">{profile.status}</p>
 
-          {/* כפתור עקוב/הפסק לעקוב רק אם זה לא הפרופיל של המשתמש עצמו */}
           {!isOwnProfile && (
             <button onClick={handleFollowToggle}>
               {isFollowing ? "unfollow" : "follow"}
@@ -142,30 +141,33 @@ export default function ProfilePage() {
         </div>
       </header>
 
-      <section className="posts-grid">
-        {posts.map((post) => (
-          <div key={post.id} className="post">
-            <Link to={`/feed/post/${post.id}`}>
-              <img src={post.imageUrl} alt="" loading="lazy" />
-            </Link>
+    <section className="posts-grid">
+  {posts.length === 0 ? (
+    <p className="no-posts">No posts</p>
+  ) : (
+    posts.map((post) => (
+      <div key={post.id} className="post">
+        <Link to={`/feed/post/${post.id}`}>
+          <img src={post.imageUrl} alt="" loading="lazy" />
+        </Link>
 
-            {/* בורגר רק אם זה הפרופיל של המשתמש עצמו */}
-            {isOwnProfile && (
-              <>
-                <button className="burger-btn" onClick={() => handleMenuToggle(post.id)}>
-                  ⋮
-                </button>
-                {openMenu === post.id && (
-                  <div className="post-menu">
-                    <button onClick={() => handleUpdate(post.id)}>✏️ Updating</button>
-                    <button onClick={() => handleDelete(post.id)}>🗑️ Deleting</button>
-                  </div>
-                )}
-              </>
+        {isOwnProfile && (
+          <>
+            <button className="burger-btn" onClick={() => handleMenuToggle(post.id)}>
+              ⋮
+            </button>
+            {openMenu === post.id && (
+              <div className="post-menu">
+                <button onClick={() => handleUpdate(post.id)}>✏️ updating</button>
+                <button onClick={() => handleDelete(post.id)}>🗑️ deleting</button>
+              </div>
             )}
-          </div>
-        ))}
-      </section>
+          </>
+        )}
+      </div>
+    ))
+  )}
+</section>
     </main>
   );
 }

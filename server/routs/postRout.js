@@ -11,7 +11,6 @@ import {
     from "../controllers/postControllers.js";
 
 import fileUpload from "express-fileupload";
-import { verifyToken } from "./followsRout.js";
 
 
 export const postsRouter = express.Router();

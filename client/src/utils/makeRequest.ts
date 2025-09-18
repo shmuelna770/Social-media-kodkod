@@ -4,7 +4,6 @@ export default async function makeRequest(url: string, method: string = 'GET', b
     try {
         let res
         if (isFile) {
-
             await new Promise(resolve => setTimeout(resolve, 500))
 
             res = await fetch(`${SERVER_URL}${url}`, {
