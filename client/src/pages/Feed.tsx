@@ -24,7 +24,7 @@ const Feed = () => {
             setLoading(true)
             const allPosts = await authMakeRequest(`/posts/feed/${userId}`, 'GET')
             if (!allPosts || allPosts.length === 0) {
-                setMessage("Start follow to show posts")
+                setMessage("🌟 Welcome to kodkodX \n A community of kodkodim keeping the magic alive-sharing posts, ideas, and laughs. Now you are part of the story. 🎉\n Your feed is quiet for now-start following friends to see fresh posts and join the fun!")
             }
             setLoading(false)
             if (!allPosts) {
