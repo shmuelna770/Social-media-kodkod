@@ -159,9 +159,10 @@ npm run dev
 
 ### בעיות נפוצות בפריסה:
 
-- **CORS Error**: וודא שהגדרת נכון את `FRONTEND_URL` במשתני הסביבה
+- **CORS Error**: השרת מוגדר לעבוד בסביבת production אוטומטית
 - **Database Connection**: בדוק את פרטי החיבור ל-Supabase
 - **Build Errors**: וודא שכל התלותים מותקנות נכון
+- **Google OAuth**: עדכן את ה-Client ID בקובץ `client/src/main.tsx` לפני הפריסה
 
 ## 🗄️ מבנה בסיס הנתונים
 

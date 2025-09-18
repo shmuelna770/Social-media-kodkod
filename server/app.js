@@ -21,7 +21,7 @@ app.use(cookieParser());
 // Configure CORS for both development and production
 const corsOptions = {
     origin: process.env.NODE_ENV === 'production' 
-        ? [process.env.FRONTEND_URL, 'https://*.onrender.com'] 
+        ? [process.env.FRONTEND_URL || 'https://social-media-kodkod.onrender.com'] 
         : ['http://localhost:5173', 'http://127.0.0.1:5173'],
     credentials: true,
     methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS", "PATCH"],
